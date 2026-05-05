@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no"/>
+<title>B² Advisory — Technology Board Advisory</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --teal-deep:   #0D3D3A;
+    --teal-mid:    #0a2e2c;
+    --teal-accent: #3DD9C0;
+    --frost:       #E8F5F3;
+    --off-white:   #f2f0eb;
+    --text-dark:   #0D3D3A;
+    --text-muted:  #5a7a78;
+    --rule:        rgba(61,217,192,0.3);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--off-white);
+    color: var(--text-dark);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 19px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,61,58,0.98);
+    backdrop-filter: blur(12px);
+    padding: 0 56px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.5px solid rgba(61,217,192,0.2);
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+
+  .nav-links { display: flex; gap: 56px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 22px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: rgba(232,245,243,0.65);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal-accent); }
+
+  .nav-cta {
+    font-size: 20px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--teal-accent);
+    text-decoration: none; border: 1px solid rgba(61,217,192,0.5);
+    padding: 18px 36px; border-radius: 2px; transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--teal-accent); color: var(--teal-deep); }
+
+  /* Mobile nav toggle */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-toggle span {
+    display: block; width: 28px; height: 2px;
+    background: var(--frost); border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: var(--teal-deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 320px 56px 100px;
+    position: relative;
+    overflow: hidden;
+    gap: 80px;
+  }
+
+  .hero-geo {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%; height: 100%;
+    opacity: 0.045;
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 1; }
+
+  .hero-rule {
+    width: 48px; height: 1.5px;
+    background: var(--teal-accent);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-eyebrow {
+    font-size: 17px; font-weight: 600; letter-spacing: 5px;
+    text-transform: uppercase; color: var(--teal-accent);
+    margin-bottom: 20px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 400; color: var(--frost);
+    line-height: 1.18; margin-bottom: 28px;
+    animation: fadeUp 1s ease both;
+  }
+  .hero-headline em { font-style: italic; color: var(--teal-accent); }
+
+  .hero-body {
+    font-size: 18px; font-weight: 400;
+    color: rgba(232,245,243,0.6);
+    max-width: 480px; line-height: 1.85;
+    margin-bottom: 44px; letter-spacing: 0.3px;
+    animation: fadeUp 1.1s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 20px; align-items: center;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .btn-primary {
+    font-size: 13px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--teal-deep);
+    background: var(--teal-accent); padding: 16px 36px;
+    border-radius: 2px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    font-size: 13px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--frost);
+    text-decoration: none; opacity: 0.5; transition: opacity 0.2s;
+  }
+  .btn-ghost:hover { opacity: 1; }
+
+  /* About panel on the right of hero */
+  .hero-right {
+    position: relative; z-index: 1;
+    border-left: 0.5px solid rgba(61,217,192,0.15);
+    padding-left: 64px;
+    animation: fadeUp 1.1s ease both;
+  }
+
+  .hero-about-label {
+    font-size: 17px; font-weight: 600; letter-spacing: 5px;
+    text-transform: uppercase; color: var(--teal-accent);
+    margin-bottom: 24px;
+  }
+
+  .hero-about-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px; font-style: italic;
+    color: rgba(232,245,243,0.75);
+    line-height: 1.75; margin-bottom: 40px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 400;
+    color: var(--frost); line-height: 1;
+  }
+
+  .hero-stat-label {
+    font-size: 15px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--teal-accent); margin-top: 6px;
+    opacity: 0.8; line-height: 1.4;
+  }
+
+  /* ─── SECTION COMMONS ─── */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-size: 17px; font-weight: 600; letter-spacing: 5px;
+    text-transform: uppercase; color: var(--teal-accent);
+    margin-bottom: 16px;
+  }
+
+  .section-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 400; color: var(--text-dark);
+    line-height: 1.2; margin-bottom: 20px;
+  }
+  .section-headline em { font-style: italic; }
+
+  .section-rule {
+    width: 40px; height: 1px;
+    background: var(--teal-accent);
+    margin-bottom: 40px;
+  }
+
+  /* ─── ABOUT ─── */
+  .about { background: var(--off-white); }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 8px;
+  }
+
+  .about-body {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.9; letter-spacing: 0.3px;
+  }
+
+  .about-body p + p { margin-top: 20px; }
+
+  .about-advisor-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-weight: 400;
+    color: var(--text-dark); line-height: 1.1;
+    margin-bottom: 4px;
+    margin-top: 36px;
+  }
+
+  .about-advisor-title {
+    font-size: 16px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal-accent); margin-bottom: 20px;
+  }
+
+  .about-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 24px; margin-bottom: 28px;
+  }
+
+  .about-tag {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-dark);
+    border: 0.5px solid rgba(13,61,58,0.25);
+    padding: 7px 16px; border-radius: 2px;
+  }
+
+  .about-boards { margin-top: 4px; }
+
+  .boards-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-muted); opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .boards-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .board-pill {
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    border: 0.5px solid rgba(13,61,58,0.2);
+    padding: 8px 18px; border-radius: 2px;
+    opacity: 0.75;
+  }
+
+  /* ─── EXPERTISE ─── */
+  .expertise {
+    background: var(--teal-deep);
+    position: relative; overflow: hidden;
+  }
+
+  .expertise-geo {
+    position: absolute;
+    bottom: -60px; left: -60px;
+    opacity: 0.04; pointer-events: none;
+  }
+
+  .expertise .section-headline { color: var(--frost); }
+
+  .expertise-intro {
+    font-size: 17px;
+    color: rgba(232,245,243,0.55);
+    max-width: 560px; line-height: 1.9;
+    letter-spacing: 0.3px; margin-bottom: 64px;
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(61,217,192,0.1);
+  }
+
+  .expertise-item {
+    background: var(--teal-deep);
+    padding: 40px 36px;
+    transition: background 0.25s;
+  }
+  .expertise-item:hover { background: rgba(61,217,192,0.06); }
+
+  .expertise-icon { width: 40px; height: 40px; margin-bottom: 20px; }
+
+  .expertise-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 400;
+    color: var(--frost); margin-bottom: 12px; line-height: 1.3;
+  }
+
+  .expertise-body {
+    font-size: 17px;
+    color: rgba(232,245,243,0.55);
+    line-height: 1.85; letter-spacing: 0.2px;
+  }
+
+  .expertise-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--teal-accent);
+    border: 0.5px solid rgba(61,217,192,0.25);
+    padding: 5px 12px; border-radius: 1px;
+  }
+
+  /* ─── PROFILE TIMELINE (kept in about-us right column) ─── */
+  .profile-timeline {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .profile-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 0.5px;
+    background: rgba(13,61,58,0.12);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    padding: 0 0 36px 0;
+    position: relative;
+  }
+
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -4px; top: 6px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--off-white);
+    border: 1.5px solid var(--teal-accent);
+  }
+
+  .timeline-item:first-child .timeline-dot {
+    background: var(--teal-accent);
+  }
+
+  .timeline-period {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 1.5px; color: var(--teal-accent);
+    padding-top: 2px; text-align: right;
+    padding-right: 24px;
+  }
+
+  .timeline-content { padding-left: 20px; }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; color: var(--text-dark);
+    margin-bottom: 3px;
+  }
+
+  .timeline-org {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); opacity: 0.65;
+    margin-bottom: 8px;
+  }
+
+  .timeline-note {
+    font-size: 15px; color: var(--text-muted);
+    line-height: 1.75; letter-spacing: 0.2px;
+  }
+
+  /* ─── ENGAGEMENT MODEL ─── */
+  .engagement { background: var(--off-white); }
+
+  .engagement-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .engagement-body {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.9; letter-spacing: 0.3px;
+    margin-bottom: 40px;
+  }
+
+  .engagement-quote {
+    background: var(--teal-deep);
+    padding: 40px 36px; border-radius: 2px;
+    position: relative;
+  }
+
+  .engagement-quote::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 80px; color: var(--teal-accent);
+    opacity: 0.2; position: absolute;
+    top: 12px; left: 28px; line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px; font-style: italic;
+    color: var(--frost); line-height: 1.75;
+    margin-bottom: 24px; padding-top: 24px;
+  }
+
+  .quote-attr {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal-accent); opacity: 0.7;
+  }
+
+  .engagement-modes {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+
+  .mode {
+    background: white; padding: 24px 28px;
+    border-left: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .mode:hover { border-left-color: var(--teal-accent); }
+
+  .mode-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+
+  .mode-body {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .sectors-label {
+    font-size: 17px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal-accent); opacity: 0.85;
+    margin-bottom: 16px; margin-top: 40px;
+  }
+
+  .sectors-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .sector-pill {
+    font-size: 15px; font-weight: 600;
+    letter-spacing: 1px; color: var(--text-muted);
+    border: 0.5px solid rgba(13,61,58,0.2);
+    padding: 14px 20px; border-radius: 2px; opacity: 0.8;
+    text-align: center;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background: var(--teal-deep);
+    position: relative; overflow: hidden;
+  }
+  .contact .section-headline { color: var(--frost); }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+
+  .contact-body {
+    font-size: 17px;
+    color: rgba(232,245,243,0.55);
+    line-height: 1.9; letter-spacing: 0.3px;
+    margin-bottom: 40px;
+  }
+
+  .contact-details { display: flex; flex-direction: column; gap: 16px; }
+
+  .contact-row {
+    display: flex; align-items: center;
+    gap: 16px; font-size: 15px;
+    color: rgba(232,245,243,0.7); letter-spacing: 0.5px;
+  }
+
+  .contact-row-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--teal-accent);
+    width: 80px; flex-shrink: 0; opacity: 0.8;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+
+  .form-field label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: rgba(232,245,243,0.4);
+  }
+
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    background: rgba(232,245,243,0.05);
+    border: 0.5px solid rgba(232,245,243,0.15);
+    color: var(--frost); font-family: 'Rajdhani', sans-serif;
+    font-size: 16px; padding: 14px 18px;
+    border-radius: 2px; outline: none;
+    transition: border-color 0.2s; width: 100%;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus { border-color: rgba(61,217,192,0.4); }
+
+  .form-field textarea { resize: vertical; min-height: 110px; }
+  .form-field select option { background: var(--teal-deep); }
+
+  .form-submit {
+    font-size: 13px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--teal-deep);
+    background: var(--teal-accent); border: none;
+    padding: 16px 36px; border-radius: 2px;
+    cursor: pointer; transition: opacity 0.2s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { opacity: 0.85; }
+  .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .form-message {
+    display: none;
+    margin-top: 14px;
+    padding: 14px 18px;
+    border-radius: 2px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.3px;
+    line-height: 1.5;
+  }
+  .form-message--success {
+    background: rgba(61,217,192,0.12);
+    border: 0.5px solid rgba(61,217,192,0.4);
+    color: var(--teal-accent);
+  }
+  .form-message--error {
+    background: rgba(220,60,60,0.08);
+    border: 0.5px solid rgba(220,60,60,0.3);
+    color: #e05555;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--teal-mid);
+    padding: 32px 48px;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    border-top: 0.5px solid rgba(61,217,192,0.1);
+  }
+
+  .footer-left { font-size: 13px; color: rgba(232,245,243,0.3); letter-spacing: 0.5px; }
+  .footer-right { font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(61,217,192,0.35); }
+
+  /* ─── LANG TOGGLE ─── */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid rgba(61,217,192,0.35);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .lang-btn {
+    font-size: 13px; font-weight: 700; letter-spacing: 2px;
+    padding: 8px 14px;
+    background: transparent;
+    color: rgba(232,245,243,0.45);
+    border: none; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .lang-btn.active {
+    background: var(--teal-accent);
+    color: var(--teal-deep);
+  }
+  .lang-btn:hover:not(.active) { color: var(--teal-accent); }
+
+
+  /* ─── FOUNDER BIO ─── */
+  .founder-bio {
+    margin-top: 64px;
+    border-top: 0.5px solid rgba(13,61,58,0.12);
+    padding-top: 56px;
+  }
+
+  .founder-bio-inner {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .founder-photo {
+    width: 200px;
+    height: auto;
+    border-radius: 2px;
+    display: block;
+    filter: grayscale(15%);
+    border: 0.5px solid rgba(13,61,58,0.1);
+  }
+
+  .founder-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 400;
+    color: var(--text-dark); line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .founder-title {
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal-accent); margin-bottom: 20px;
+  }
+
+  .founder-bio-text p {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.9; letter-spacing: 0.3px;
+    margin-bottom: 24px;
+  }
+
+  .founder-credentials {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+
+  .founder-cred-item {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-dark);
+    border: 0.5px solid rgba(13,61,58,0.22);
+    padding: 6px 14px; border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .founder-bio-inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .founder-photo {
+      width: 140px;
+    }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ════════════════════════════════════
+     MOBILE RESPONSIVE
+  ════════════════════════════════════ */
+  @media (max-width: 768px) {
+
+    /* Nav */
+    nav { padding: 0 16px; height: 200px; }
+    .nav-logo svg { width: 180px !important; height: auto !important; }
+    .lang-toggle { flex-shrink: 0; }
+    .nav-toggle { flex-shrink: 0; margin-left: 12px; }
+    .nav-links { display: none; flex-direction: column; gap: 0;
+      position: fixed; top: 200px; left: 0; right: 0;
+      background: rgba(13,61,58,0.98);
+      padding: 16px 0; border-bottom: 0.5px solid rgba(61,217,192,0.15);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 16px 24px; font-size: 18px; letter-spacing: 2px; }
+    .nav-cta { display: none; }
+    .nav-toggle { display: flex; }
+
+    /* Hero */
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 240px 24px 60px;
+      gap: 48px;
+      min-height: auto;
+    }
+
+    /* Sectors: 2 columns on mobile */
+    .sectors-row { grid-template-columns: repeat(2, 1fr); }
+    .hero-geo { display: none; }
+    .hero-right {
+      border-left: none;
+      border-top: 0.5px solid rgba(61,217,192,0.15);
+      padding-left: 0;
+      padding-top: 40px;
+    }
+    .hero-headline { font-size: clamp(32px, 8vw, 48px); }
+    .hero-body { font-size: 17px; max-width: 100%; }
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* Sections */
+    section { padding: 64px 24px; }
+
+    /* Two-column grids → single column */
+    .about-layout,
+    .engagement-layout,
+    .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+
+    /* Expertise grid → 1 column */
+    .expertise-grid { grid-template-columns: 1fr; }
+
+    /* About right column Who We Work With grid */
+    .about-layout > div:last-child > div[style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Timeline */
+    .timeline-item { grid-template-columns: 90px 1fr; gap: 16px; }
+    .timeline-period { font-size: 11px; }
+    .timeline-role { font-size: 15px; }
+    .timeline-note { font-size: 14px; }
+
+    /* Quote */
+    .engagement-quote { padding: 32px 24px; }
+    .quote-text { font-size: 17px; }
+
+    /* Contact form */
+    .form-row { grid-template-columns: 1fr; }
+
+    /* Footer */
+    footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+    .footer-right { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-headline { font-size: 30px; }
+    .section-headline { font-size: 28px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .expertise-item { padding: 28px 20px; }
+    .about-tag { font-size: 10px; padding: 6px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 175" width="300" height="263">
+      <rect x="55" y="42" width="70" height="70" fill="none" stroke="#E8F5F3" stroke-width="2.5"/>
+      <rect x="111" y="28" width="35" height="35" fill="none" stroke="#3DD9C0" stroke-width="2.5"/>
+      <text x="88" y="77" text-anchor="middle" dominant-baseline="central" font-family="'Playfair Display',Georgia,serif" font-size="58" fill="#E8F5F3">B</text>
+      <line x1="52" y1="125" x2="148" y2="125" stroke="#3DD9C0" stroke-width="0.75" opacity="0.7"/>
+      <text x="100" y="141" text-anchor="middle" font-family="'Rajdhani',sans-serif" font-weight="700" font-size="13" fill="#E8F5F3" letter-spacing="2">B<tspan font-size="9" dy="-5">2</tspan><tspan dy="5" font-size="13"> </tspan><tspan fill="#3DD9C0" font-weight="600" letter-spacing="4">ADVISORY</tspan></text>
+    </svg>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" id="nav-about" onclick="closeNav()">About</a></li>
+    <li><a href="#expertise" id="nav-expertise" onclick="closeNav()">Expertise</a></li>
+    <li><a href="#engagement" id="nav-engagement" onclick="closeNav()">Engagement</a></li>
+  </ul>
+  <a class="nav-cta" id="nav-cta-link" href="#contact">Request a Briefing</a>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+  </div>
+  <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<script>
+  /* ─── NAV TOGGLE ─── */
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  /* ─── FORM SUBMIT — Web3Forms ─── */
+  async function handleSubmit() {
+    const lang  = document.documentElement.lang || 'en';
+    const isFr  = lang === 'fr';
+
+    const firstName = document.getElementById('field-fn')?.value.trim() || '';
+    const lastName  = document.getElementById('field-ln')?.value.trim() || '';
+    const org       = document.getElementById('field-org')?.value.trim() || '';
+    const email     = document.getElementById('field-email')?.value.trim() || '';
+    const enquiry   = document.getElementById('field-enquiry')?.value || '';
+    const context   = document.getElementById('field-context')?.value.trim() || '';
+
+    // Validation
+    if (!firstName || !lastName || !email) {
+      showFormMessage(isFr
+        ? 'Veuillez renseigner votre prénom, nom et adresse courriel.'
+        : 'Please provide your first name, last name, and email address.', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFormMessage(isFr
+        ? 'Veuillez entrer une adresse courriel valide.'
+        : 'Please enter a valid email address.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('form-submit');
+    btn.disabled = true;
+    btn.textContent = isFr ? 'Envoi en cours…' : 'Sending…';
+
+    const subject = isFr
+      ? `Demande B² Advisory — ${firstName} ${lastName}${org ? ' · ' + org : ''}`
+      : `B² Advisory Enquiry — ${firstName} ${lastName}${org ? ' · ' + org : ''}`;
+
+    const message = isFr
+      ? `Prénom : ${firstName}\nNom : ${lastName}\nOrganisation : ${org || '—'}\nCourriel : ${email}\nNature de la demande : ${enquiry || '—'}\n\nContexte :\n${context || '—'}`
+      : `First Name: ${firstName}\nLast Name: ${lastName}\nOrganisation: ${org || '—'}\nEmail: ${email}\nNature of Enquiry: ${enquiry || '—'}\n\nBrief Context:\n${context || '—'}`;
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: 'c62f2f46-70fb-42b1-91e2-95aa934be7c6',
+          to: 'info@bsquared-advisory.com',
+          subject: subject,
+          message: message,
+          from_name: `${firstName} ${lastName}`,
+          reply_to: email,
+          botcheck: ''
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showFormMessage(isFr
+          ? 'Merci — votre message a bien été envoyé. Nous vous répondrons rapidement.'
+          : 'Thank you — your enquiry has been sent. We will be in touch shortly.', 'success');
+        // Clear form
+        ['field-fn','field-ln','field-org','field-email','field-context'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+        document.getElementById('field-enquiry').selectedIndex = 0;
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    } catch (err) {
+      showFormMessage(isFr
+        ? "Une erreur s'est produite. Veuillez réessayer ou nous contacter par courriel."
+        : 'Something went wrong. Please try again or contact us directly by email.', 'error');
+    } finally {
+      btn.disabled = false;
+      const t = (document.documentElement.lang === 'fr') ? translations.fr : translations.en;
+      btn.textContent = t['form-submit'];
+    }
+  }
+
+  function showFormMessage(msg, type) {
+    let el = document.getElementById('form-message');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'form-message';
+      document.getElementById('form-submit').insertAdjacentElement('afterend', el);
+    }
+    el.textContent = msg;
+    el.className = 'form-message form-message--' + type;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 8000);
+  }
+
+  const translations = {
+    en: {
+      // Nav
+      'nav-about': 'About',
+      'nav-expertise': 'Expertise',
+      'nav-engagement': 'Engagement',
+      'nav-cta': 'Request a Briefing',
+      // Hero
+      'hero-eyebrow': 'Independent Technology Board Advisory',
+      'hero-headline': 'Where deep<br>technical authority<br>meets <em>board-level</em><br>governance.',
+      'hero-body': 'B² Advisory provides boards, nomination committees, and investors with independent, technically authoritative oversight of complex technology programmes — cloud migration, 5G transformation, digital carve-outs, and OSS/BSS evolution. We also partner directly with CIOs, CTOs, mobile operators, network suppliers, and systems integrators who need an independent perspective to validate strategy, de-risk delivery, and sharpen their technology narrative.',
+      'hero-about-label': 'Who We Are',
+      'hero-about-text': 'An independent advisory practice founded on the conviction that boards and CxOs alike deserve a technically informed, independent voice — one that can challenge assumptions, interrogate vendor assurances, and ensure technology decisions are grounded in strategic reality.',
+      'hero-stat-label-1': 'Years Telecom Leadership',
+      'hero-stat-label-2': 'Core Areas of Practice',
+      'hero-stat-label-3': 'North America & Europe',
+      'hero-stat-label-4': 'Bilingual Advisory',
+      'btn-primary': 'About B² Advisory',
+      'btn-ghost': 'Get in Touch →',
+      // About
+      'section-label-about': 'About Us',
+      'section-headline-about': 'Independent technology judgment<br>for <em>complex, high-stakes decisions.</em>',
+      'about-p1': 'B² Advisory works with executives, boards, and investors to de-risk large-scale technology decisions, guide transformation, and ensure long-term strategic alignment in complex environments — and directly with CIOs, CTOs, mobile operators, network suppliers, and systems integrators who need rigorous, independent scrutiny of their technology strategy and delivery.',
+      'about-p2': 'Large-scale technology transformations — cloud migrations, OSS/BSS carve-outs, 5G deployments, digital separations — fail more often for governance reasons than technical ones. Boards that rely solely on management reporting, without an independent capability to interrogate architecture decisions, challenge vendor assurances, or assess programme risk, are poorly positioned to intervene when programmes begin to diverge from plan.',
+      'about-p3': 'B² Advisory is designed to close that gap — providing the continuity that a non-executive director engaging only at board level cannot replicate, and the independence that management cannot provide.',
+      'how-we-help': 'How We Help',
+      'help-title-1': 'Strategic Decisions',
+      'help-body-1': 'Validate major technology investments — 5G, cloud-native infrastructure, AI-driven transformation — ensuring architecture choices and vendor selections are grounded in strategic reality, whether presenting to a board or stress-testing internally.',
+      'help-title-2': 'Transformation at Risk',
+      'help-body-2': 'Diagnose and course-correct complex programmes that are off-track, over budget, or underdelivering — providing an independent view of where intervention is needed, whether the audience is a board, a SteerCo, or an operator\'s own executive team.',
+      'help-title-3': 'Independent Technical Advisory',
+      'help-body-3': 'Clear, unbiased perspectives on technology strategy, risk, and execution — for boards seeking governance assurance, and for CIOs, CTOs, network suppliers, and integrators seeking an independent sounding board before committing to major architectural or commercial decisions.',
+      'who-we-work-with': 'Who We Work With',
+      'client-1': 'Boards of directors & NEDs',
+      'client-2': 'CIOs & CTOs',
+      'client-3': 'Telecommunications operators',
+      'client-4': 'Network suppliers & integrators',
+      'client-5': 'Private equity & infrastructure investors',
+      'client-6': 'Enterprises with mission-critical networks',
+      'selected-engagements': 'Selected Engagements',
+      'eng-1': 'Led a multi-year cloud-native transformation of a national telecom network, transitioning to a fully automated, DevOps-driven operating model and achieving industry-leading resilience.',
+      'eng-2': 'Designed and implemented an automation-first strategy delivering significant workforce efficiency gains and substantial reduction in operational cost across a large-scale national network.',
+      'eng-3': 'Established a zero customer-impact change model across thousands of production releases, dramatically reducing operational risk in a mission-critical environment.',
+      'eng-4': 'Directed end-to-end delivery of 5G Standalone architecture, including core network, network slicing, and mission-critical services at national scale.',
+      // Expertise
+      'section-label-expertise': 'Areas of Expertise',
+      'section-headline-expertise': 'Technical depth.<br><em>Strategic command.</em>',
+      'expertise-intro': 'Deep technical authority across the full stack of modern telecom infrastructure — from core network architecture to cloud-native OSS/BSS transformation — paired with board-level strategic acumen built over 25 years across Europe and North America.',
+      'exp-title-1': 'Cloud-Native Transformation',
+      'exp-body-1': 'Guiding the transition from traditional network delivery to fully automated, DevOps-driven operating models. From hyperscaler selection and architecture design to delivery governance and operational readiness.',
+      'exp-title-2': '5G Strategy & Network Architecture',
+      'exp-body-2': 'End-to-end advisory on 5G Standalone architecture, NFVI, network slicing, and core network strategy. Translating complex infrastructure choices into board-level risk and investment decisions.',
+      'exp-title-3': 'OSS/BSS & Digital Systems',
+      'exp-body-3': 'Advisory on OSS/BSS transformation, billing platform migration, CRM evolution, and IT system carve-outs. Independent assessment of build-vs-buy decisions, vendor selection, and systems integrator performance.',
+      'exp-title-4': 'Programme Risk & Governance',
+      'exp-body-4': 'Assessment of PMO maturity, programme controls, and vendor management frameworks. Independent perspective on whether governance structures are proportionate to programme scale — and on TSA exit sequencing for digital separations.',
+      'exp-title-5': 'AI & Automation Strategy',
+      'exp-body-5': 'Advising on automation-first strategies that challenge traditional architectures — enabling faster time-to-market, reduced operational cost, and greater network resilience through AI-driven observability and intelligent change management.',
+      'exp-title-6': 'Board-Level Communication',
+      'exp-body-6': 'Translating complex technology decisions into clear strategic choices and trade-offs for boards and C-suites. Preparing independent briefing notes, horizon-scanning assessments, and programme risk summaries for non-executive directors.',
+      // Engagement
+      'section-label-engagement': 'How We Work',
+      'section-headline-engagement': 'Structured for continuity.<br><em>Designed for independence.</em>',
+      'engagement-body': 'Advisory engagements are structured around a focused immersion phase — establishing the depth of programme understanding required to provide effective board-level advice from the outset — followed by ongoing oversight continuity, typically one day per week. Each mandate is tailored to the board\'s specific governance needs, programme complexity, and risk profile.',
+      'mode-title-1': 'Board Advisory Mandate',
+      'mode-body-1': 'Ongoing independent oversight of a technology programme on behalf of the board or a board committee. Includes SteerCo participation, pre-board briefing notes, and on-call availability between meetings.',
+      'mode-title-2': 'Programme Immersion & Assessment',
+      'mode-body-2': 'A focused, time-bounded deep-dive into a programme\'s architecture, governance, risk posture, and vendor landscape — concluding with a confidential board briefing note and recommendations.',
+      'mode-title-3': 'NomCo & Investor Advisory',
+      'mode-body-3': 'Technology due diligence support for nomination committees assessing CTO or CIO appointments, and for investors evaluating the technology risk profile of infrastructure assets or platform companies.',
+      'sectors-label': 'Sectors & Contexts',
+      'quote-text': 'Large-scale technology programmes fail, more often than not, for governance reasons rather than technical ones. The combination of SteerCo participation and board preparation provides continuity that a non-executive director engaging only at board level cannot replicate — and the independence that management cannot provide.',
+      'quote-attr': 'B² Advisory · Engagement Philosophy',
+      // Contact
+      'section-label-contact': 'Get in Touch',
+      'section-headline-contact': 'Request a briefing.',
+      'contact-body': 'If your board is overseeing a complex technology programme — a cloud migration, a systems carve-out, a TSA exit, or a 5G transformation — and requires independent, technically authoritative oversight, B² Advisory is available to discuss how an advisory mandate could be structured to your needs. CIOs, CTOs, mobile operators, network suppliers, and systems integrators seeking rigorous independent counsel are equally welcome to get in touch.',
+      'label-email': 'Email',
+      'label-phone': 'Phone',
+      'label-base': 'Base',
+      'label-reach': 'Reach',
+      'label-languages': 'Languages',
+      'form-fn': 'First Name',
+      'form-ln': 'Last Name',
+      'form-org': 'Organisation',
+      'form-email': 'Email',
+      'form-enquiry': 'Nature of Enquiry',
+      'form-context': 'Brief Context',
+      'form-placeholder': 'A short description of your programme or advisory need...',
+      'form-submit': 'Send Enquiry →',
+      // Footer
+      'footer-left': '© 2026 B² Advisory Inc. · Ontario, Canada · All rights reserved.',
+      'founder-name': 'Jérôme Birot',
+      'founder-title': 'Founder &amp; Managing Partner',
+      'founder-bio-p': 'Jérôme brings over 25 years of senior technology leadership across Europe and North America, including a decade as Vice President at TELUS where he led the company\'s cloud-native network transformation, 5G Standalone delivery, and AI-driven automation strategy. A board director at ATIS and NGMN, he combines deep hands-on technical authority with the strategic fluency boards and executive teams need — bilingual in English and French, and equally at home advising a SteerCo or a nomination committee.',
+      'fcred-1': 'M.Eng. Telecom, ESME Sudria Paris',
+      'fcred-2': 'MIT Sloan · Harvard Business School · USC',
+      'fcred-3': 'ATIS Board · NGMN Board',
+      'footer-right': 'Technology · Cloud · 5G · Digital Transformation',
+    },
+    fr: {
+      'nav-about': 'À Propos',
+      'nav-expertise': 'Expertise',
+      'nav-engagement': 'Engagement',
+      'nav-cta': 'Demander un Entretien',
+      'hero-eyebrow': 'Conseil Technologique Indépendant',
+      'hero-headline': 'L\'autorité technique<br>au service de la<br>gouvernance <em>au niveau</em><br><em>du conseil.</em>',
+      'hero-body': 'B² Advisory fournit aux conseils d\'administration, aux comités de nomination et aux investisseurs une supervision indépendante et techniquement fondée des programmes technologiques complexes — migration infonuagique, transformation 5G, séparations numériques et évolution OSS/BSS. Nous accompagnons également directement les DSI, les DIT, les opérateurs mobiles, les fournisseurs de réseaux et les intégrateurs qui ont besoin d\'une perspective indépendante pour valider leur stratégie et réduire les risques de livraison.',
+      'hero-about-label': 'Qui Nous Sommes',
+      'hero-about-text': 'Un cabinet de conseil indépendant fondé sur la conviction que les conseils d\'administration méritent une voix techniquement informée à la table de gouvernance — capable de remettre en question les hypothèses, d\'interroger les assurances des fournisseurs et de s\'assurer que les décisions technologiques sont ancrées dans la réalité stratégique.',
+      'hero-stat-label-1': 'Ans de Direction Télécom',
+      'hero-stat-label-2': 'Domaines Principaux',
+      'hero-stat-label-3': 'Amérique du Nord & Europe',
+      'hero-stat-label-4': 'Conseil Bilingue',
+      'btn-primary': 'À Propos de B² Advisory',
+      'btn-ghost': 'Nous Contacter →',
+      'section-label-about': 'À Propos',
+      'section-headline-about': 'Un jugement technologique indépendant<br>pour les <em>décisions complexes à enjeux élevés.</em>',
+      'about-p1': 'B² Advisory travaille avec des dirigeants, des conseils d\'administration et des investisseurs pour réduire les risques liés aux grandes décisions technologiques, orienter la transformation et assurer l\'alignement stratégique à long terme — ainsi que directement avec les DSI, les DIT, les opérateurs mobiles, les fournisseurs de réseaux et les intégrateurs qui ont besoin d\'un examen indépendant rigoureux de leur stratégie et de leur livraison technologiques.',
+      'about-p2': 'Les grandes transformations technologiques — migrations infonuagiques, externalisations OSS/BSS, déploiements 5G, séparations numériques — échouent le plus souvent pour des raisons de gouvernance plutôt que techniques. Les conseils qui s\'appuient uniquement sur les rapports de la direction, sans capacité indépendante d\'interroger les décisions d\'architecture, de remettre en cause les assurances des fournisseurs ou d\'évaluer le risque des programmes, sont mal positionnés pour intervenir.',
+      'about-p3': 'B² Advisory est conçu pour combler cet écart — en apportant la continuité qu\'un administrateur non exécutif intervenant uniquement au niveau du conseil ne peut reproduire, et l\'indépendance que la direction ne peut fournir.',
+      'how-we-help': 'Comment Nous Aidons',
+      'help-title-1': 'Décisions Stratégiques',
+      'help-body-1': 'Valider les grands investissements technologiques — 5G, infrastructure infonuagique native, transformation par l\'IA — en s\'assurant que les choix d\'architecture et les sélections de fournisseurs sont ancrés dans la réalité stratégique.',
+      'help-title-2': 'Transformation en Péril',
+      'help-body-2': 'Diagnostiquer et recadrer les programmes complexes déviants, hors budget ou sous-performants — en fournissant une vue indépendante des points d\'intervention nécessaires, que l\'audience soit un conseil, un comité de pilotage ou l\'équipe dirigeante d\'un opérateur.',
+      'help-title-3': 'Conseil Technique Indépendant',
+      'help-body-3': 'Des perspectives claires et impartiales sur la stratégie, le risque et l\'exécution technologiques — pour les conseils en quête d\'assurance de gouvernance, et pour les DSI, DIT, fournisseurs de réseaux et intégrateurs souhaitant une caisse de résonance indépendante avant de s\'engager dans des décisions architecturales ou commerciales majeures.',
+      'who-we-work-with': 'Avec Qui Nous Travaillons',
+      'client-1': 'Conseils d\'administration & administrateurs indépendants',
+      'client-2': 'DSI & DIT',
+      'client-3': 'Opérateurs de télécommunications',
+      'client-4': 'Fournisseurs de réseaux & intégrateurs',
+      'client-5': 'Capital-investissement & investisseurs en infrastructure',
+      'client-6': 'Entreprises avec des réseaux critiques',
+      'selected-engagements': 'Mandats Sélectionnés',
+      'eng-1': 'Dirigé une transformation infonuagique native pluriannuelle d\'un réseau télécom national, avec transition vers un modèle d\'exploitation entièrement automatisé et piloté par DevOps, atteignant une résilience de pointe dans l\'industrie.',
+      'eng-2': 'Conçu et mis en œuvre une stratégie axée sur l\'automatisation permettant des gains d\'efficacité significatifs et une réduction substantielle des coûts opérationnels sur un grand réseau national.',
+      'eng-3': 'Établi un modèle de changement sans impact sur les clients à travers des milliers de déploiements en production, réduisant considérablement le risque opérationnel dans un environnement à mission critique.',
+      'eng-4': 'Dirigé la livraison de bout en bout de l\'architecture 5G Standalone, incluant le réseau cœur, le découpage réseau et les services à mission critique à l\'échelle nationale.',
+      'section-label-expertise': 'Domaines d\'Expertise',
+      'section-headline-expertise': 'Maîtrise technique.<br><em>Commandement stratégique.</em>',
+      'expertise-intro': 'Une autorité technique approfondie sur l\'ensemble de la pile d\'infrastructure télécom moderne — de l\'architecture réseau cœur à la transformation OSS/BSS infonuagique native — associée à une acuité stratégique au niveau des conseils d\'administration forgée sur 25 ans en Europe et en Amérique du Nord.',
+      'exp-title-1': 'Transformation Infonuagique Native',
+      'exp-body-1': 'Accompagnement de la transition des modèles de livraison traditionnels vers des modèles d\'exploitation entièrement automatisés et pilotés par DevOps. De la sélection de l\'hyperscaleur à la conception architecturale, en passant par la gouvernance de livraison et la préparation opérationnelle.',
+      'exp-title-2': 'Stratégie 5G & Architecture Réseau',
+      'exp-body-2': 'Conseil de bout en bout sur l\'architecture 5G Standalone, NFVI, le découpage réseau et la stratégie de réseau cœur. Traduction des choix d\'infrastructure complexes en décisions de risque et d\'investissement au niveau du conseil.',
+      'exp-title-3': 'OSS/BSS & Systèmes Numériques',
+      'exp-body-3': 'Conseil sur la transformation OSS/BSS, la migration des plateformes de facturation, l\'évolution du CRM et les externalisations de systèmes IT. Évaluation indépendante des décisions build-vs-buy, de la sélection des fournisseurs et de la performance des intégrateurs.',
+      'exp-title-4': 'Risque & Gouvernance des Programmes',
+      'exp-body-4': 'Évaluation de la maturité du PMO, des contrôles de programme et des cadres de gestion des fournisseurs. Perspective indépendante sur la proportionnalité des structures de gouvernance et sur le séquençage des sorties TSA.',
+      'exp-title-5': 'Stratégie IA & Automatisation',
+      'exp-body-5': 'Conseil sur les stratégies axées sur l\'automatisation qui remettent en question les architectures traditionnelles — permettant une mise sur le marché plus rapide, une réduction des coûts opérationnels et une plus grande résilience du réseau grâce à l\'observabilité pilotée par l\'IA.',
+      'exp-title-6': 'Communication au Niveau du Conseil',
+      'exp-body-6': 'Traduction des décisions technologiques complexes en choix stratégiques clairs et arbitrages pour les conseils d\'administration et les comités exécutifs. Préparation de notes de briefing indépendantes, d\'évaluations prospectives et de résumés de risques pour les administrateurs non exécutifs.',
+      'section-label-engagement': 'Notre Approche',
+      'section-headline-engagement': 'Structuré pour la continuité.<br><em>Conçu pour l\'indépendance.</em>',
+      'engagement-body': 'Les mandats de conseil sont structurés autour d\'une phase d\'immersion approfondie — établissant la compréhension du programme nécessaire pour fournir des conseils efficaces dès le départ — suivie d\'une continuité de supervision continue, généralement à raison d\'un jour par semaine. Chaque mandat est adapté aux besoins spécifiques de gouvernance du conseil, à la complexité du programme et au profil de risque.',
+      'mode-title-1': 'Mandat de Conseil au Conseil d\'Administration',
+      'mode-body-1': 'Supervision indépendante continue d\'un programme technologique pour le compte du conseil ou d\'un comité du conseil. Inclut la participation au comité de pilotage, des notes de briefing pré-conseil et une disponibilité entre les réunions.',
+      'mode-title-2': 'Immersion & Évaluation de Programme',
+      'mode-body-2': 'Une plongée approfondie et limitée dans le temps sur l\'architecture d\'un programme, la gouvernance, le profil de risque et le paysage des fournisseurs — concluant par une note de briefing confidentielle et des recommandations au conseil.',
+      'mode-title-3': 'Conseil NomCo & Investisseurs',
+      'mode-body-3': 'Soutien en diligence raisonnable technologique pour les comités de nomination évaluant des nominations de DIT ou de DSI, et pour les investisseurs évaluant le profil de risque technologique d\'actifs d\'infrastructure ou d\'entreprises de plateforme.',
+      'sectors-label': 'Secteurs & Contextes',
+      'quote-text': 'Les grands programmes technologiques échouent, le plus souvent, pour des raisons de gouvernance plutôt que techniques. La combinaison de la participation au comité de pilotage et de la préparation du conseil assure une continuité qu\'un administrateur non exécutif intervenant uniquement au niveau du conseil ne peut reproduire — et l\'indépendance que la direction ne peut fournir.',
+      'quote-attr': 'B² Advisory · Philosophie d\'Engagement',
+      'section-label-contact': 'Nous Contacter',
+      'section-headline-contact': 'Demander un entretien.',
+      'contact-body': 'Si votre conseil supervise un programme technologique complexe — une migration infonuagique, une externalisation de systèmes, une sortie de TSA ou une transformation 5G — et nécessite une supervision indépendante et techniquement fondée, B² Advisory est disponible pour discuter de la structure d\'un mandat adapté à vos besoins. Les DSI, DIT, opérateurs mobiles, fournisseurs de réseaux et intégrateurs recherchant un conseil indépendant rigoureux sont également les bienvenus.',
+      'label-email': 'Courriel',
+      'label-phone': 'Téléphone',
+      'label-base': 'Siège',
+      'label-reach': 'Portée',
+      'label-languages': 'Langues',
+      'form-fn': 'Prénom',
+      'form-ln': 'Nom de famille',
+      'form-org': 'Organisation',
+      'form-email': 'Courriel',
+      'form-enquiry': 'Nature de la Demande',
+      'form-context': 'Bref Contexte',
+      'form-placeholder': 'Une courte description de votre programme ou de votre besoin en conseil...',
+      'form-submit': 'Envoyer la Demande →',
+      'footer-left': '© 2026 B² Advisory Inc. · Ontario, Canada · Tous droits réservés.',
+      'founder-name': 'Jérôme Birot',
+      'founder-title': 'Fondateur &amp; Associé Directeur',
+      'founder-bio-p': 'Jérôme apporte plus de 25 ans d\'expertise en direction technologique en Europe et en Amérique du Nord, dont une décennie comme Vice-Président chez TELUS, où il a dirigé la transformation infonuagique native du réseau, la livraison 5G Standalone, et la stratégie d\'automatisation pilotée par l\'IA. Administrateur chez ATIS et NGMN, il allie une autorité technique approfondie à la maîtrise stratégique que les conseils d\'administration et les équipes dirigeantes recherchent — bilingue anglais-français, aussi à l\'aise pour conseiller un comité de pilotage qu\'un comité de nomination.',
+      'fcred-1': 'M.Ing. Télécom, ESME Sudria Paris',
+      'fcred-2': 'MIT Sloan · Harvard Business School · USC',
+      'fcred-3': 'Conseil ATIS · Conseil NGMN',
+      'footer-right': 'Technologie · Infonuagique · 5G · Transformation Numérique',
+    }
+  };
+
+  function setLang(lang) {
+    const t = translations[lang];
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+
+    const set = (id, val, html = true) => {
+      const el = document.getElementById(id);
+      if (el) { html ? el.innerHTML = val : el.textContent = val; }
+    };
+    const setText = (id, val) => set(id, val, false);
+
+    // Nav
+    setText('nav-about', t['nav-about']);
+    setText('nav-expertise', t['nav-expertise']);
+    setText('nav-engagement', t['nav-engagement']);
+    setText('nav-cta-link', t['nav-cta']);
+    // Hero
+    setText('hero-eyebrow', t['hero-eyebrow']);
+    set('hero-headline', t['hero-headline']);
+    set('hero-body', t['hero-body']);
+    setText('hero-about-label', t['hero-about-label']);
+    setText('hero-about-text', t['hero-about-text']);
+    setText('hero-stat-label-1', t['hero-stat-label-1']);
+    setText('hero-stat-label-2', t['hero-stat-label-2']);
+    setText('hero-stat-label-3', t['hero-stat-label-3']);
+    setText('hero-stat-label-4', t['hero-stat-label-4']);
+    setText('btn-primary', t['btn-primary']);
+    setText('btn-ghost', t['btn-ghost']);
+    // About
+    setText('section-label-about', t['section-label-about']);
+    set('section-headline-about', t['section-headline-about']);
+    setText('about-p1', t['about-p1']);
+    setText('about-p2', t['about-p2']);
+    setText('about-p3', t['about-p3']);
+    setText('how-we-help', t['how-we-help']);
+    setText('help-title-1', t['help-title-1']); setText('help-body-1', t['help-body-1']);
+    setText('help-title-2', t['help-title-2']); setText('help-body-2', t['help-body-2']);
+    setText('help-title-3', t['help-title-3']); setText('help-body-3', t['help-body-3']);
+    setText('who-we-work-with', t['who-we-work-with']);
+    setText('client-1', t['client-1']); setText('client-2', t['client-2']);
+    setText('client-3', t['client-3']); setText('client-4', t['client-4']);
+    setText('client-5', t['client-5']); setText('client-6', t['client-6']);
+    setText('selected-engagements', t['selected-engagements']);
+    setText('eng-1', t['eng-1']); setText('eng-2', t['eng-2']);
+    setText('eng-3', t['eng-3']); setText('eng-4', t['eng-4']);
+    // Expertise
+    setText('section-label-expertise', t['section-label-expertise']);
+    set('section-headline-expertise', t['section-headline-expertise']);
+    setText('expertise-intro', t['expertise-intro']);
+    setText('exp-title-1', t['exp-title-1']); setText('exp-body-1', t['exp-body-1']);
+    setText('exp-title-2', t['exp-title-2']); setText('exp-body-2', t['exp-body-2']);
+    setText('exp-title-3', t['exp-title-3']); setText('exp-body-3', t['exp-body-3']);
+    setText('exp-title-4', t['exp-title-4']); setText('exp-body-4', t['exp-body-4']);
+    setText('exp-title-5', t['exp-title-5']); setText('exp-body-5', t['exp-body-5']);
+    setText('exp-title-6', t['exp-title-6']); setText('exp-body-6', t['exp-body-6']);
+    // Engagement
+    setText('section-label-engagement', t['section-label-engagement']);
+    set('section-headline-engagement', t['section-headline-engagement']);
+    setText('engagement-body', t['engagement-body']);
+    setText('mode-title-1', t['mode-title-1']); setText('mode-body-1', t['mode-body-1']);
+    setText('mode-title-2', t['mode-title-2']); setText('mode-body-2', t['mode-body-2']);
+    setText('mode-title-3', t['mode-title-3']); setText('mode-body-3', t['mode-body-3']);
+    setText('sectors-label', t['sectors-label']);
+    setText('quote-text', t['quote-text']);
+    setText('quote-attr', t['quote-attr']);
+    // Contact
+    setText('section-label-contact', t['section-label-contact']);
+    setText('section-headline-contact', t['section-headline-contact']);
+    setText('contact-body', t['contact-body']);
+    setText('contact-label-email', t['label-email']);
+    setText('contact-label-phone', t['label-phone']);
+    setText('contact-label-base', t['label-base']);
+    setText('contact-label-reach', t['label-reach']);
+    setText('contact-label-languages', t['label-languages']);
+    setText('form-fn', t['form-fn']); setText('form-ln', t['form-ln']);
+    setText('form-org', t['form-org']); setText('form-email', t['form-email']);
+    setText('form-enquiry', t['form-enquiry']); setText('form-context', t['form-context']);
+    const ph = document.getElementById('field-context');
+    if (ph) ph.placeholder = t['form-placeholder'];
+    setText('form-submit', t['form-submit']);
+    // Footer
+    setText('footer-left', t['footer-left']); setText('footer-right', t['footer-right']);
+    // Founder bio
+    setText('founder-name', t['founder-name']);
+    set('founder-title', t['founder-title']);
+    setText('founder-bio-p', t['founder-bio-p']);
+    setText('fcred-1', t['fcred-1']); setText('fcred-2', t['fcred-2']); setText('fcred-3', t['fcred-3']);
+  }
+</script>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <svg class="hero-geo" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMid slice">
+    <rect x="80" y="80" width="440" height="440" fill="none" stroke="#E8F5F3" stroke-width="1"/>
+    <rect x="260" y="20" width="220" height="220" fill="none" stroke="#3DD9C0" stroke-width="1"/>
+    <rect x="160" y="340" width="160" height="160" fill="none" stroke="#E8F5F3" stroke-width="0.5"/>
+    <rect x="360" y="540" width="120" height="120" fill="none" stroke="#3DD9C0" stroke-width="0.5"/>
+    <line x1="80" y1="520" x2="520" y2="520" stroke="#E8F5F3" stroke-width="0.3"/>
+    <line x1="300" y1="80" x2="300" y2="760" stroke="#3DD9C0" stroke-width="0.2"/>
+  </svg>
+
+  <div class="hero-left">
+    <div class="hero-rule"></div>
+    <div class="hero-eyebrow" id="hero-eyebrow">Independent Technology Board Advisory</div>
+    <h1 class="hero-headline" id="hero-headline">
+      Where deep<br>technical authority<br>meets <em>board-level</em><br>governance.
+    </h1>
+    <p class="hero-body" id="hero-body">
+      B² Advisory provides boards, nomination committees, and investors with independent, 
+      technically authoritative oversight of complex technology programmes — 
+      cloud migration, 5G transformation, digital carve-outs, and OSS/BSS evolution.
+      We also partner directly with CIOs, CTOs, mobile operators, network suppliers, 
+      and systems integrators who need an independent perspective to validate strategy, 
+      de-risk delivery, and sharpen their technology narrative.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" id="btn-primary" href="#about">About B² Advisory</a>
+      <a class="btn-ghost" id="btn-ghost" href="#contact">Get in Touch →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-about-label" id="hero-about-label">Who We Are</div>
+    <div class="hero-about-text" id="hero-about-text">
+      An independent advisory practice founded on the conviction that boards and CxOs alike 
+      deserve a technically informed, independent voice — one that can challenge 
+      assumptions, interrogate vendor assurances, and ensure technology decisions 
+      are grounded in strategic reality.
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">25+</div>
+        <div class="hero-stat-label" id="hero-stat-label-1">Years Telecom Leadership</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">5G · Cloud</div>
+        <div class="hero-stat-label" id="hero-stat-label-2">Core Areas of Practice</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">CA / EU</div>
+        <div class="hero-stat-label" id="hero-stat-label-3">North America &amp; Europe</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">EN · FR</div>
+        <div class="hero-stat-label" id="hero-stat-label-4">Bilingual Advisory</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT US ── -->
+<section class="about" id="about">
+  <div class="section-label" id="section-label-about">About Us</div>
+  <h2 class="section-headline" id="section-headline-about">Independent technology judgment<br>for <em>complex, high-stakes decisions.</em></h2>
+  <div class="section-rule"></div>
+
+  <div class="about-layout">
+
+    <!-- Left: firm positioning -->
+    <div>
+      <div class="about-body">
+        <p id="about-p1">
+          B² Advisory works with executives, boards, and investors to de-risk large-scale 
+          technology decisions, guide transformation, and ensure long-term strategic alignment 
+          in complex environments — and directly with CIOs, CTOs, mobile operators, network 
+          suppliers, and systems integrators who need rigorous, independent scrutiny of their 
+          technology strategy and delivery.
+        </p>
+        <p id="about-p2">
+          Large-scale technology transformations — cloud migrations, OSS/BSS carve-outs, 
+          5G deployments, digital separations — fail more often for governance reasons than 
+          technical ones. Boards that rely solely on management reporting, without an 
+          independent capability to interrogate architecture decisions, challenge vendor 
+          assurances, or assess programme risk, are poorly positioned to intervene when 
+          programmes begin to diverge from plan.
+        </p>
+        <p id="about-p3">
+          B² Advisory is designed to close that gap — providing the continuity that a 
+          non-executive director engaging only at board level cannot replicate, and the 
+          independence that management cannot provide.
+        </p>
+      </div>
+
+      <!-- How we help: three scenarios -->
+      <div style="margin-top:40px">
+        <div class="about-advisor-name" style="font-size:24px;margin-top:0;margin-bottom:16px" id="how-we-help">How We Help</div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <div style="background:white;padding:22px 28px;border-left:2px solid transparent;transition:border-color 0.2s" onmouseover="this.style.borderColor='#3DD9C0'" onmouseout="this.style.borderColor='transparent'">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px" id="help-title-1">Strategic Decisions</div>
+            <div style="font-size:17px;color:var(--text-muted);line-height:1.8" id="help-body-1">Validate major technology investments — 5G, cloud-native infrastructure, AI-driven transformation — ensuring architecture choices and vendor selections are grounded in strategic reality, whether presenting to a board or stress-testing internally.</div>
+          </div>
+          <div style="background:white;padding:22px 28px;border-left:2px solid transparent;transition:border-color 0.2s" onmouseover="this.style.borderColor='#3DD9C0'" onmouseout="this.style.borderColor='transparent'">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px" id="help-title-2">Transformation at Risk</div>
+            <div style="font-size:17px;color:var(--text-muted);line-height:1.8" id="help-body-2">Diagnose and course-correct complex programmes that are off-track, over budget, or underdelivering — providing an independent view of where intervention is needed, whether the audience is a board, a SteerCo, or an operator's own executive team.</div>
+          </div>
+          <div style="background:white;padding:22px 28px;border-left:2px solid transparent;transition:border-color 0.2s" onmouseover="this.style.borderColor='#3DD9C0'" onmouseout="this.style.borderColor='transparent'">
+            <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px" id="help-title-3">Independent Technical Advisory</div>
+            <div style="font-size:17px;color:var(--text-muted);line-height:1.8" id="help-body-3">Clear, unbiased perspectives on technology strategy, risk, and execution — for boards seeking governance assurance, and for CIOs, CTOs, network suppliers, and integrators seeking an independent sounding board before committing to major architectural or commercial decisions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: who we work with + selected engagements -->
+    <div>
+      <div class="about-advisor-name" style="font-size:24px;margin-top:0;margin-bottom:16px" id="who-we-work-with">Who We Work With</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:48px">
+        <div style="background:white;padding:20px 22px">
+          <div style="font-size:17px;color:var(--text-dark);font-weight:600;letter-spacing:0.5px" id="client-1">Boards of directors &amp; NEDs</div>
+        </div>
+        <div style="background:white;padding:20px 22px">
+          <div style="font-size:17px;color:var(--text-dark);font-weight:600;letter-spacing:0.5px" id="client-2">CIOs &amp; CTOs</div>
+        </div>
+        <div style="background:white;padding:20px 22px">
+          <div style="font-size:17px;color:var(--text-dark);font-weight:600;letter-spacing:0.5px" id="client-3">Telecommunications operators</div>
+        </div>
+        <div style="background:white;padding:20px 22px">
+          <div style="font-size:17px;color:var(--text-dark);font-weight:600;letter-spacing:0.5px" id="client-4">Network suppliers &amp; integrators</div>
+        </div>
+        <div style="background:white;padding:20px 22px">
+          <div style="font-size:17px;color:var(--text-dark);font-weight:600;letter-spacing:0.5px" id="client-5">Private equity &amp; infrastructure investors</div>
+        </div>
+        <div style="background:white;padding:20px 22px">
+          <div style="font-size:17px;color:var(--text-dark);font-weight:600;letter-spacing:0.5px" id="client-6">Enterprises with mission-critical networks</div>
+        </div>
+      </div>
+
+      <div class="about-advisor-name" style="font-size:24px;margin-top:0;margin-bottom:20px" id="selected-engagements">Selected Engagements</div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="border-left:1.5px solid var(--teal-accent);padding-left:20px">
+          <div style="font-size:17px;color:var(--text-muted);line-height:1.8" id="eng-1">Led a multi-year cloud-native transformation of a national telecom network, transitioning to a fully automated, DevOps-driven operating model and achieving industry-leading resilience.</div>
+        </div>
+        <div style="border-left:1.5px solid rgba(61,217,192,0.4);padding-left:20px">
+          <div style="font-size:17px;color:var(--text-muted);line-height:1.8" id="eng-2">Designed and implemented an automation-first strategy delivering significant workforce efficiency gains and substantial reduction in operational cost across a large-scale national network.</div>
+        </div>
+        <div style="border-left:1.5px solid rgba(61,217,192,0.4);padding-left:20px">
+          <div style="font-size:17px;color:var(--text-muted);line-height:1.8" id="eng-3">Established a zero customer-impact change model across thousands of production releases, dramatically reducing operational risk in a mission-critical environment.</div>
+        </div>
+        <div style="border-left:1.5px solid rgba(61,217,192,0.4);padding-left:20px">
+          <div style="font-size:17px;color:var(--text-muted);line-height:1.8" id="eng-4">Directed end-to-end delivery of 5G Standalone architecture, including core network, network slicing, and mission-critical services at national scale.</div>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- ── FOUNDER BIO ── -->
+  <div class="founder-bio" id="founder-bio-block">
+    <div class="founder-bio-inner">
+      <img class="founder-photo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAGQAQsDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6pooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACkzSmkoAM0uaSjFAC5NIzKilmIAAySewrnvG/jvSPAWlf2hqsrZclYYIwDJMwGSAPQdST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" alt="Jérôme Birot — Founder & Managing Partner, B² Advisory"/>
+      <div class="founder-bio-text">
+        <div class="founder-name" id="founder-name">Jérôme Birot</div>
+        <div class="founder-title" id="founder-title">Founder &amp; Managing Partner</div>
+        <p id="founder-bio-p">
+          Jérôme brings over 25 years of senior technology leadership across Europe and North America, 
+          including a decade as Vice President at TELUS where he led the company's cloud-native 
+          network transformation, 5G Standalone delivery, and AI-driven automation strategy. 
+          A board director at ATIS and NGMN, he combines deep hands-on technical authority with 
+          the strategic fluency boards and executive teams need — bilingual in English and French, 
+          and equally at home advising a SteerCo or a nomination committee.
+        </p>
+        <div class="founder-credentials">
+          <span class="founder-cred-item" id="fcred-1">M.Eng. Telecom, ESME Sudria Paris</span>
+          <span class="founder-cred-item" id="fcred-2">MIT Sloan · Harvard Business School · USC</span>
+          <span class="founder-cred-item" id="fcred-3">ATIS Board · NGMN Board</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ── EXPERTISE ── -->
+<section class="expertise" id="expertise">
+  <svg class="expertise-geo" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <rect x="40" y="40" width="320" height="320" fill="none" stroke="#E8F5F3" stroke-width="1"/>
+    <rect x="160" y="10" width="180" height="180" fill="none" stroke="#3DD9C0" stroke-width="1"/>
+  </svg>
+
+  <div class="section-label" id="section-label-expertise">Areas of Expertise</div>
+  <h2 class="section-headline" id="section-headline-expertise" style="color:var(--frost)">Technical depth.<br><em>Strategic command.</em></h2>
+  <div class="section-rule"></div>
+  <p class="expertise-intro" id="expertise-intro">
+    Deep technical authority across the full stack of modern telecom infrastructure —
+    from core network architecture to cloud-native OSS/BSS transformation —
+    paired with board-level strategic acumen built over 25 years across Europe and North America.
+  </p>
+
+  <div class="expertise-grid">
+    <div class="expertise-item">
+      <svg class="expertise-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="14" height="14" stroke="#3DD9C0" stroke-width="1.5"/>
+        <rect x="20" y="2" width="14" height="14" stroke="#3DD9C0" stroke-width="1.5" opacity="0.4"/>
+        <rect x="2" y="20" width="14" height="14" stroke="#3DD9C0" stroke-width="1.5" opacity="0.4"/>
+        <rect x="20" y="20" width="14" height="14" stroke="#3DD9C0" stroke-width="1.5"/>
+      </svg>
+      <div class="expertise-title" id="exp-title-1">Cloud-Native Transformation</div>
+      <div class="expertise-body" id="exp-body-1">Guiding the transition from traditional network delivery to fully automated, DevOps-driven operating models. From hyperscaler selection and architecture design to delivery governance and operational readiness.</div>
+      <div class="expertise-tags">
+        <span class="tag">Hyperscaler</span>
+        <span class="tag">DevOps</span>
+        <span class="tag">IaC</span>
+        <span class="tag">Automation</span>
+      </div>
+    </div>
+    <div class="expertise-item">
+      <svg class="expertise-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="8" stroke="#3DD9C0" stroke-width="1.5"/>
+        <circle cx="18" cy="18" r="16" stroke="#3DD9C0" stroke-width="1" opacity="0.3"/>
+        <line x1="18" y1="2" x2="18" y2="34" stroke="#3DD9C0" stroke-width="1" opacity="0.4"/>
+        <line x1="2" y1="18" x2="34" y2="18" stroke="#3DD9C0" stroke-width="1" opacity="0.4"/>
+      </svg>
+      <div class="expertise-title" id="exp-title-2">5G Strategy &amp; Network Architecture</div>
+      <div class="expertise-body" id="exp-body-2">End-to-end advisory on 5G Standalone architecture, NFVI, network slicing, and core network strategy. Translating complex infrastructure choices into board-level risk and investment decisions.</div>
+      <div class="expertise-tags">
+        <span class="tag">5G SA</span>
+        <span class="tag">NFVI</span>
+        <span class="tag">Slicing</span>
+        <span class="tag">Core</span>
+      </div>
+    </div>
+    <div class="expertise-item">
+      <svg class="expertise-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="10" width="28" height="18" rx="1" stroke="#3DD9C0" stroke-width="1.5"/>
+        <line x1="4" y1="16" x2="32" y2="16" stroke="#3DD9C0" stroke-width="1" opacity="0.4"/>
+        <rect x="10" y="28" width="16" height="5" stroke="#3DD9C0" stroke-width="1" opacity="0.4"/>
+      </svg>
+      <div class="expertise-title" id="exp-title-3">OSS/BSS &amp; Digital Systems</div>
+      <div class="expertise-body" id="exp-body-3">Advisory on OSS/BSS transformation, billing platform migration, CRM evolution, and IT system carve-outs. Independent assessment of build-vs-buy decisions, vendor selection, and systems integrator performance.</div>
+      <div class="expertise-tags">
+        <span class="tag">OSS</span>
+        <span class="tag">BSS</span>
+        <span class="tag">CRM</span>
+        <span class="tag">Billing</span>
+      </div>
+    </div>
+    <div class="expertise-item">
+      <svg class="expertise-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,3 33,12 33,24 18,33 3,24 3,12" stroke="#3DD9C0" stroke-width="1.5" fill="none"/>
+        <polygon points="18,10 26,15 26,21 18,26 10,21 10,15" stroke="#3DD9C0" stroke-width="1" fill="none" opacity="0.4"/>
+      </svg>
+      <div class="expertise-title" id="exp-title-4">Programme Risk &amp; Governance</div>
+      <div class="expertise-body" id="exp-body-4">Assessment of PMO maturity, programme controls, and vendor management frameworks. Independent perspective on whether governance structures are proportionate to programme scale — and on TSA exit sequencing for digital separations.</div>
+      <div class="expertise-tags">
+        <span class="tag">PMO</span>
+        <span class="tag">Risk</span>
+        <span class="tag">TSA</span>
+        <span class="tag">SteerCo</span>
+      </div>
+    </div>
+    <div class="expertise-item">
+      <svg class="expertise-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 28 L12 16 L20 22 L28 8 L34 14" stroke="#3DD9C0" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <circle cx="12" cy="16" r="2" fill="#3DD9C0" opacity="0.5"/>
+        <circle cx="20" cy="22" r="2" fill="#3DD9C0" opacity="0.5"/>
+        <circle cx="28" cy="8" r="2" fill="#3DD9C0" opacity="0.5"/>
+      </svg>
+      <div class="expertise-title" id="exp-title-5">AI &amp; Automation Strategy</div>
+      <div class="expertise-body" id="exp-body-5">Advising on automation-first strategies that challenge traditional architectures — enabling faster time-to-market, reduced operational cost, and greater network resilience through AI-driven observability and intelligent change management.</div>
+      <div class="expertise-tags">
+        <span class="tag">AI/ML</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Observability</span>
+      </div>
+    </div>
+    <div class="expertise-item">
+      <svg class="expertise-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="8" width="32" height="22" rx="1" stroke="#3DD9C0" stroke-width="1.5"/>
+        <line x1="2" y1="14" x2="34" y2="14" stroke="#3DD9C0" stroke-width="1" opacity="0.4"/>
+        <line x1="12" y1="8" x2="12" y2="30" stroke="#3DD9C0" stroke-width="1" opacity="0.4"/>
+        <circle cx="7" cy="11" r="1.5" fill="#3DD9C0" opacity="0.6"/>
+      </svg>
+      <div class="expertise-title" id="exp-title-6">Board-Level Communication</div>
+      <div class="expertise-body" id="exp-body-6">Translating complex technology decisions into clear strategic choices and trade-offs for boards and C-suites. Preparing independent briefing notes, horizon-scanning assessments, and programme risk summaries for non-executive directors.</div>
+      <div class="expertise-tags">
+        <span class="tag">Board</span>
+        <span class="tag">C-Suite</span>
+        <span class="tag">Policy</span>
+        <span class="tag">Governance</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="engagement" id="engagement">
+  <div class="section-label" id="section-label-engagement">How We Work</div>
+  <h2 class="section-headline" id="section-headline-engagement">Structured for continuity.<br><em>Designed for independence.</em></h2>
+  <div class="section-rule"></div>
+
+  <div class="engagement-layout">
+    <div>
+      <p class="engagement-body" id="engagement-body">
+        Advisory engagements are structured around a focused immersion phase — establishing 
+        the depth of programme understanding required to provide effective board-level advice 
+        from the outset — followed by ongoing oversight continuity, typically one day per week.
+        Each mandate is tailored to the board's specific governance needs, programme complexity, 
+        and risk profile.
+      </p>
+
+      <div class="engagement-modes">
+        <div class="mode">
+          <div class="mode-title" id="mode-title-1">Board Advisory Mandate</div>
+          <div class="mode-body" id="mode-body-1">Ongoing independent oversight of a technology programme on behalf of the board or a board committee. Includes SteerCo participation, pre-board briefing notes, and on-call availability between meetings.</div>
+        </div>
+        <div class="mode">
+          <div class="mode-title" id="mode-title-2">Programme Immersion &amp; Assessment</div>
+          <div class="mode-body" id="mode-body-2">A focused, time-bounded deep-dive into a programme's architecture, governance, risk posture, and vendor landscape — concluding with a confidential board briefing note and recommendations.</div>
+        </div>
+        <div class="mode">
+          <div class="mode-title" id="mode-title-3">NomCo &amp; Investor Advisory</div>
+          <div class="mode-body" id="mode-body-3">Technology due diligence support for nomination committees assessing CTO or CIO appointments, and for investors evaluating the technology risk profile of infrastructure assets or platform companies.</div>
+        </div>
+      </div>
+
+      <div class="sectors-label" id="sectors-label">Sectors &amp; Contexts</div>
+      <div class="sectors-row">
+        <div class="sector-pill">FTTH Infrastructure</div>
+        <div class="sector-pill">Mobile Operators</div>
+        <div class="sector-pill">TSA Carve-outs</div>
+        <div class="sector-pill">PE-backed Telcos</div>
+        <div class="sector-pill">Regulated Utilities</div>
+        <div class="sector-pill">Digital Platforms</div>
+      </div>
+    </div>
+
+    <div class="engagement-quote">
+      <div class="quote-text" id="quote-text">
+        Large-scale technology programmes fail, more often than not, for governance reasons 
+        rather than technical ones. The combination of SteerCo participation and board 
+        preparation provides continuity that a non-executive director engaging only at board 
+        level cannot replicate — and the independence that management cannot provide.
+      </div>
+      <div class="quote-attr" id="quote-attr">B² Advisory · Engagement Philosophy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact" id="contact">
+  <svg class="hero-geo" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" style="opacity:0.03;pointer-events:none;">
+    <rect x="60" y="60" width="480" height="480" fill="none" stroke="#E8F5F3" stroke-width="1"/>
+    <rect x="240" y="30" width="240" height="240" fill="none" stroke="#3DD9C0" stroke-width="1"/>
+  </svg>
+
+  <div class="section-label" id="section-label-contact">Get in Touch</div>
+  <h2 class="section-headline" id="section-headline-contact">Request a briefing.</h2>
+  <div class="section-rule"></div>
+
+  <div class="contact-layout">
+    <div>
+      <p class="contact-body" id="contact-body">
+        If your board is overseeing a complex technology programme — a cloud migration, 
+        a systems carve-out, a TSA exit, or a 5G transformation — and requires 
+        independent, technically authoritative oversight, B² Advisory is available 
+        to discuss how an advisory mandate could be structured to your needs.
+        CIOs, CTOs, mobile operators, network suppliers, and systems integrators 
+        seeking rigorous independent counsel are equally welcome to get in touch.
+      </p>
+      <div class="contact-details">
+        <div class="contact-row">
+          <div class="contact-row-label" id="contact-label-email">Email</div>
+          <a href="mailto:info@bsquared-advisory.com" style="color:inherit;text-decoration:none;">info@bsquared-advisory.com</a>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-label" id="contact-label-phone">Phone</div>
+          <a href="tel:+14165547890" style="color:inherit;text-decoration:none;">+1 416 554 7890</a>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-label" id="contact-label-base">Base</div>
+          Ontario, Canada
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-label" id="contact-label-reach">Reach</div>
+          Canada · Europe · International
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-label" id="contact-label-languages">Languages</div>
+          English · Français
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-field">
+          <label id="form-fn">First Name</label>
+          <input type="text" id="field-fn"/>
+        </div>
+        <div class="form-field">
+          <label id="form-ln">Last Name</label>
+          <input type="text" id="field-ln"/>
+        </div>
+      </div>
+      <div class="form-field">
+        <label id="form-org">Organisation</label>
+        <input type="text" id="field-org"/>
+      </div>
+      <div class="form-field">
+        <label id="form-email">Email</label>
+        <input type="email" id="field-email"/>
+      </div>
+      <div class="form-field">
+        <label id="form-enquiry">Nature of Enquiry</label>
+        <select id="field-enquiry">
+          <option value="">Select...</option>
+          <option>Board Advisory Mandate</option>
+          <option>Programme Governance Review</option>
+          <option>Technology Strategy</option>
+          <option>TSA / Carve-out Advisory</option>
+          <option>NomCo / Investor Due Diligence</option>
+          <option>CIO / CTO Advisory</option>
+          <option>Operator / Supplier / Integrator Engagement</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label id="form-context">Brief Context</label>
+        <textarea id="field-context" placeholder="A short description of your programme or advisory need..."></textarea>
+      </div>
+      <button class="form-submit" id="form-submit" onclick="handleSubmit()">Send Enquiry →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-left" id="footer-left">© 2026 B² Advisory Inc. · Ontario, Canada · All rights reserved.</div>
+  <div class="footer-right" id="footer-right">Technology · Cloud · 5G · Digital Transformation</div>
+</footer>
+
+</body>
+</html>
