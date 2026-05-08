@@ -19,7 +19,7 @@
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 280px; }
 
   body {
     background: var(--off-white);
@@ -54,6 +54,7 @@
     text-decoration: none; transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--teal-accent); }
+  .nav-links a.active { color: var(--teal-accent); }
 
   .nav-cta {
     font-size: 20px; font-weight: 700; letter-spacing: 2px;
@@ -696,6 +697,7 @@
   @media (max-width: 768px) {
 
     /* Nav */
+    html { scroll-padding-top: 200px; }
     nav { padding: 0 16px; height: 200px; }
     .nav-logo svg { width: 180px !important; height: auto !important; }
     .lang-toggle { flex-shrink: 0; }
@@ -1630,5 +1632,29 @@
   <div class="footer-right" id="footer-right">Technology · Cloud · 5G · Digital Transformation</div>
 </footer>
 
+
+<script>
+  (function () {
+    const navSections = ['about', 'expertise', 'engagement'];
+
+    function updateActiveNav() {
+      const navHeight = window.innerWidth <= 768 ? 200 : 280;
+      const scrollY = window.scrollY + navHeight + 10;
+      let current = '';
+      for (const id of navSections) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) current = id;
+      }
+      navSections.forEach(id => {
+        const link = document.getElementById('nav-' + id);
+        if (link) link.classList.toggle('active', id === current);
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    window.addEventListener('resize', updateActiveNav, { passive: true });
+    updateActiveNav();
+  })();
+</script>
 </body>
 </html>
