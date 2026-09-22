@@ -686,6 +686,173 @@
     }
   }
 
+
+  /* ─── INDUSTRY REPORTS ─── */
+  .reports { background: var(--frost); position: relative; }
+
+  .reports-intro {
+    font-size: 17px; color: var(--text-muted);
+    max-width: 640px; line-height: 1.9;
+    letter-spacing: 0.3px; margin-bottom: 56px;
+  }
+
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .report-card {
+    background: white;
+    border: 0.5px solid rgba(13,61,58,0.12);
+    border-radius: 2px;
+    display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .report-card:hover { border-color: rgba(61,217,192,0.6); transform: translateY(-2px); }
+
+  .report-cover {
+    background: var(--teal-deep);
+    height: 150px; position: relative; overflow: hidden;
+    padding: 24px 28px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .report-cover svg { position: absolute; right: -10px; top: -10px; width: 170px; height: 170px; opacity: 0.35; }
+  .report-topic {
+    position: relative; z-index: 1;
+    font-size: 12px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--teal-accent);
+  }
+  .report-edition {
+    position: relative; z-index: 1;
+    font-size: 13px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(232,245,243,0.6);
+  }
+
+  .report-body { padding: 28px 28px 24px; display: flex; flex-direction: column; flex: 1; }
+
+  .report-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; line-height: 1.3;
+    color: var(--text-dark); margin-bottom: 12px;
+  }
+  .report-summary {
+    font-size: 17px; color: var(--text-muted);
+    line-height: 1.75; margin-bottom: 20px; flex: 1;
+  }
+  .report-meta {
+    font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-muted);
+    opacity: 0.8; margin-bottom: 20px;
+  }
+  .report-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; color: var(--text-dark);
+    margin-bottom: 18px;
+  }
+  .report-price small {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-muted); margin-left: 6px;
+  }
+
+  .report-actions { display: flex; flex-direction: column; gap: 10px; }
+
+  .report-btn {
+    display: block; text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; text-decoration: none;
+    padding: 15px 20px; border-radius: 2px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .report-btn--buy { background: var(--teal-deep); color: var(--frost); border: 1px solid var(--teal-deep); }
+  .report-btn--buy:hover { background: var(--teal-accent); border-color: var(--teal-accent); color: var(--teal-deep); }
+  .report-btn--preview { background: transparent; color: var(--teal-deep); border: 1px solid rgba(13,61,58,0.35); }
+  .report-btn--preview:hover { border-color: var(--teal-accent); color: var(--teal-deep); background: rgba(61,217,192,0.08); }
+  .report-btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+  .report-note {
+    display: none; font-size: 14px; color: var(--text-muted);
+    margin-top: 8px; line-height: 1.5;
+  }
+
+  .reports-footnote {
+    margin-top: 40px; font-size: 16px; color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+  .reports-footnote a { color: var(--teal-deep); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--teal-accent); }
+
+  /* Preview modal */
+  .rp-modal {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,46,44,0.72);
+    display: none; align-items: center; justify-content: center;
+    padding: 16px;
+  }
+  .rp-modal.open { display: flex; }
+  .rp-dialog {
+    background: var(--teal-deep);
+    border: 0.5px solid rgba(61,217,192,0.3);
+    border-radius: 2px;
+    width: 100%; max-width: 520px;
+    max-height: calc(100vh - 32px); overflow-y: auto;
+    padding: 40px 40px 36px; position: relative;
+  }
+  .rp-close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; cursor: pointer;
+    color: rgba(232,245,243,0.55); font-size: 28px; line-height: 1;
+    font-family: 'Rajdhani', sans-serif;
+  }
+  .rp-close:hover { color: var(--teal-accent); }
+  .rp-eyebrow {
+    font-size: 13px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--teal-accent); margin-bottom: 10px;
+  }
+  .rp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; line-height: 1.3; color: var(--frost); margin-bottom: 10px;
+  }
+  .rp-lede { font-size: 16px; color: rgba(232,245,243,0.6); line-height: 1.7; margin-bottom: 24px; }
+  .rp-form { display: flex; flex-direction: column; gap: 16px; }
+  .rp-consent {
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 14px; color: rgba(232,245,243,0.6); line-height: 1.55;
+  }
+  .rp-consent input { margin-top: 4px; accent-color: var(--teal-accent); width: 16px; height: 16px; flex-shrink: 0; }
+  .rp-privacy { font-size: 13px; color: rgba(232,245,243,0.4); line-height: 1.5; }
+  .rp-success { display: none; }
+  .rp-success p { font-size: 16px; color: rgba(232,245,243,0.7); line-height: 1.7; margin-bottom: 20px; }
+  .rp-success .report-btn { margin-bottom: 10px; }
+  .rp-success .report-btn--preview { color: var(--frost); border-color: rgba(232,245,243,0.3); }
+  .rp-success .report-btn--buy { background: var(--teal-accent); border-color: var(--teal-accent); color: var(--teal-deep); }
+
+  @media (max-width: 1100px) {
+    .reports-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .reports-grid { grid-template-columns: 1fr; }
+    .reports-intro { margin-bottom: 40px; }
+    .rp-dialog { padding: 36px 22px 28px; }
+    .rp-title { font-size: 22px; }
+  }
+
+  /* Nav fit with four links on laptop-width screens */
+  @media (min-width: 769px) and (max-width: 1400px) {
+    nav { padding: 0 32px; }
+    .nav-logo svg { width: 240px; height: auto; }
+    .nav-links { gap: 32px; }
+    .nav-links a { font-size: 18px; letter-spacing: 2.5px; }
+    .nav-cta { font-size: 16px; padding: 14px 22px; }
+  }
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .nav-logo svg { width: 180px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 15px; letter-spacing: 1.5px; }
+    .nav-cta { font-size: 13px; padding: 12px 16px; letter-spacing: 1.5px; }
+  }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -796,6 +963,7 @@
     <li><a href="#about" id="nav-about" onclick="closeNav()">About</a></li>
     <li><a href="#expertise" id="nav-expertise" onclick="closeNav()">Expertise</a></li>
     <li><a href="#engagement" id="nav-engagement" onclick="closeNav()">Engagement</a></li>
+    <li><a href="#reports" id="nav-reports" onclick="closeNav()">Reports</a></li>
   </ul>
   <a class="nav-cta" id="nav-cta-link" href="#contact">Request a Briefing</a>
   <div class="lang-toggle">
@@ -1190,6 +1358,8 @@
     set('founder-title', t['founder-title']);
     setText('founder-bio-p', t['founder-bio-p']);
     setText('fcred-1', t['fcred-1']); setText('fcred-2', t['fcred-2']); setText('fcred-3', t['fcred-3']);
+    // Industry Reports
+    if (typeof window.applyReportsLang === 'function') window.applyReportsLang(lang);
   }
 </script>
 
@@ -1539,6 +1709,24 @@
   </div>
 </section>
 
+<!-- ── INDUSTRY REPORTS ── -->
+<section class="reports" id="reports">
+  <div class="section-label" id="section-label-reports">Industry Reports</div>
+  <h2 class="section-headline" id="section-headline-reports">Independent analysis.<br><em>Executive-ready insight.</em></h2>
+  <div class="section-rule"></div>
+  <p class="reports-intro" id="reports-intro">
+    Concise, independent research on the technology decisions shaping telecom and digital infrastructure.
+    Download a free preview of any report, or purchase the full edition for immediate delivery.
+  </p>
+
+  <!-- Cards are rendered from the REPORTS list in the script at the bottom of this page. -->
+  <div class="reports-grid" id="reports-grid"></div>
+
+  <p class="reports-footnote" id="reports-footnote">
+    Need a team licence or a tailored briefing on one of these topics? <a href="#contact">Get in touch →</a>
+  </p>
+</section>
+
 <!-- ── CONTACT ── -->
 <section class="contact" id="contact">
   <svg class="hero-geo" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" style="opacity:0.03;pointer-events:none;">
@@ -1635,7 +1823,7 @@
 
 <script>
   (function () {
-    const navSections = ['about', 'expertise', 'engagement'];
+    const navSections = ['about', 'expertise', 'engagement', 'reports'];
 
     function updateActiveNav() {
       const navHeight = window.innerWidth <= 768 ? 200 : 280;
@@ -1654,6 +1842,367 @@
     window.addEventListener('scroll', updateActiveNav, { passive: true });
     window.addEventListener('resize', updateActiveNav, { passive: true });
     updateActiveNav();
+  })();
+</script>
+
+<!-- ── REPORT PREVIEW MODAL (email capture) ── -->
+<div class="rp-modal" id="rp-modal" role="dialog" aria-modal="true" aria-labelledby="rp-title">
+  <div class="rp-dialog">
+    <button class="rp-close" id="rp-close" aria-label="Close">×</button>
+    <div class="rp-eyebrow" id="rp-eyebrow">Free Preview</div>
+    <div class="rp-title" id="rp-title"></div>
+
+    <div id="rp-form-wrap">
+      <p class="rp-lede" id="rp-lede">Tell us where to send it and your download will start right away.</p>
+      <form class="rp-form" id="rp-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="rp-fn" id="rp-label-fn">First Name</label>
+            <input type="text" id="rp-fn" autocomplete="given-name" required/>
+          </div>
+          <div class="form-field">
+            <label for="rp-ln" id="rp-label-ln">Last Name</label>
+            <input type="text" id="rp-ln" autocomplete="family-name" required/>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="rp-email" id="rp-label-email">Work Email</label>
+          <input type="email" id="rp-email" autocomplete="email" required/>
+        </div>
+        <div class="form-field">
+          <label for="rp-org" id="rp-label-org">Organisation (optional)</label>
+          <input type="text" id="rp-org" autocomplete="organization"/>
+        </div>
+        <input type="checkbox" name="botcheck" id="rp-botcheck" style="display:none" tabindex="-1" autocomplete="off"/>
+        <label class="rp-consent">
+          <input type="checkbox" id="rp-consent"/>
+          <span id="rp-consent-text">Send me occasional insights and new report announcements from B² Advisory. I can unsubscribe at any time.</span>
+        </label>
+        <button type="submit" class="form-submit" id="rp-submit">Download Preview →</button>
+        <div class="form-message" id="rp-message"></div>
+        <p class="rp-privacy" id="rp-privacy">We use your details only to send this preview and, if you opt in, B² Advisory updates. We never share them.</p>
+      </form>
+    </div>
+
+    <div class="rp-success" id="rp-success">
+      <p id="rp-success-text">Your preview is downloading. If it doesn't start, use the button below.</p>
+      <a class="report-btn report-btn--preview" id="rp-download-again" href="#" download>Download Again</a>
+      <a class="report-btn report-btn--buy" id="rp-buy" href="#">Buy the Full Report</a>
+    </div>
+  </div>
+</div>
+
+<!-- Lemon Squeezy checkout overlay -->
+<script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
+
+<script>
+  /* ════════════════════════════════════
+     INDUSTRY REPORTS — edit this list to add, change or remove reports.
+     previewUrl  : free preview PDF, committed under /reports/previews/
+     checkoutUrl : Lemon Squeezy "Share → Checkout link" for the product
+                   (anything containing REPLACE is treated as not yet set up)
+     The full report is uploaded to Lemon Squeezy only — never to this repo.
+  ════════════════════════════════════ */
+  const REPORTS = [
+    {
+      id: 'hyperscaler-selection',
+      topic:   { en: 'Cloud · Hyperscalers', fr: 'Infonuagique · Hyperscaleurs' },
+      title:   { en: 'Hyperscaler Selection for Telecom Operators', fr: "Choisir son hyperscaleur : guide pour les opérateurs télécom" },
+      summary: { en: 'How operators should evaluate AWS, Azure and Google Cloud for IT and network workloads — landing zones, sovereignty, commercial levers and exit risk.',
+                 fr: "Comment évaluer AWS, Azure et Google Cloud pour les charges IT et réseau — zones d'atterrissage, souveraineté, leviers commerciaux et risque de sortie." },
+      edition: { en: 'Edition 2026', fr: 'Édition 2026' },
+      pages: 42,
+      price: 295, currency: 'USD',
+      previewUrl: 'reports/previews/placeholder-preview.pdf',
+      checkoutUrl: 'https://REPLACE-STORE.lemonsqueezy.com/buy/REPLACE-VARIANT-ID'
+    },
+    {
+      id: '5g-sa-monetisation',
+      topic:   { en: '5G Standalone', fr: '5G Standalone' },
+      title:   { en: '5G Standalone: From Deployment to Monetisation', fr: '5G Standalone : du déploiement à la monétisation' },
+      summary: { en: 'Where 5G Standalone is creating value, where it is not, and the architecture and operating-model choices that separate the two.',
+                 fr: "Où la 5G Standalone crée de la valeur, où elle n'en crée pas, et les choix d'architecture et de modèle opérationnel qui font la différence." },
+      edition: { en: 'Edition 2026', fr: 'Édition 2026' },
+      pages: 36,
+      price: 295, currency: 'USD',
+      previewUrl: 'reports/previews/placeholder-preview.pdf',
+      checkoutUrl: 'https://REPLACE-STORE.lemonsqueezy.com/buy/REPLACE-VARIANT-ID'
+    },
+    {
+      id: 'ai-network-operations',
+      topic:   { en: 'AI & Automation', fr: 'IA & Automatisation' },
+      title:   { en: 'AI-Driven Network Operations: An Executive Primer', fr: "Opérations réseau pilotées par l'IA : l'essentiel pour les dirigeants" },
+      summary: { en: 'A practical view of AIOps and intelligent change management — realistic benefits, prerequisites, and the governance questions executives should ask.',
+                 fr: "Un regard pratique sur l'AIOps et la gestion intelligente du changement — bénéfices réalistes, prérequis et questions de gouvernance à poser." },
+      edition: { en: 'Edition 2026', fr: 'Édition 2026' },
+      pages: 28,
+      price: 195, currency: 'USD',
+      previewUrl: 'reports/previews/placeholder-preview.pdf',
+      checkoutUrl: 'https://REPLACE-STORE.lemonsqueezy.com/buy/REPLACE-VARIANT-ID'
+    }
+  ];
+
+  const REPORTS_I18N = {
+    en: {
+      'nav-reports': 'Reports',
+      'section-label-reports': 'Industry Reports',
+      'section-headline-reports': 'Independent analysis.<br><em>Executive-ready insight.</em>',
+      'reports-intro': 'Concise, independent research on the technology decisions shaping telecom and digital infrastructure. Download a free preview of any report, or purchase the full edition for immediate delivery.',
+      'reports-footnote': 'Need a team licence or a tailored briefing on one of these topics? <a href="#contact">Get in touch →</a>',
+      pages: 'pages', pdf: 'PDF',
+      preview: 'Free Preview', buy: 'Buy Full Report', soon: 'Checkout coming soon',
+      notReady: 'Online checkout for this report is being set up. Please get in touch to order a copy.',
+      'rp-eyebrow': 'Free Preview',
+      'rp-lede': 'Tell us where to send it and your download will start right away.',
+      'rp-label-fn': 'First Name', 'rp-label-ln': 'Last Name',
+      'rp-label-email': 'Work Email', 'rp-label-org': 'Organisation (optional)',
+      'rp-consent-text': 'Send me occasional insights and new report announcements from B² Advisory. I can unsubscribe at any time.',
+      'rp-submit': 'Download Preview →', 'rp-sending': 'Preparing…',
+      'rp-privacy': 'We use your details only to send this preview and, if you opt in, B² Advisory updates. We never share them.',
+      'rp-success-text': "Your preview is downloading. If it doesn't start, use the button below.",
+      'rp-download-again': 'Download Again', 'rp-buy': 'Buy the Full Report',
+      errRequired: 'Please provide your first name, last name and email address.',
+      errEmail: 'Please enter a valid email address.'
+    },
+    fr: {
+      'nav-reports': 'Rapports',
+      'section-label-reports': 'Rapports Sectoriels',
+      'section-headline-reports': 'Analyse indépendante.<br><em>Éclairage pour dirigeants.</em>',
+      'reports-intro': "Des analyses indépendantes et concises sur les décisions technologiques qui façonnent les télécoms et les infrastructures numériques. Téléchargez gratuitement un aperçu de chaque rapport, ou achetez l'édition complète, livrée immédiatement.",
+      'reports-footnote': 'Besoin d’une licence d’équipe ou d’un briefing sur mesure sur l’un de ces sujets ? <a href="#contact">Nous contacter →</a>',
+      pages: 'pages', pdf: 'PDF',
+      preview: 'Aperçu Gratuit', buy: 'Acheter le Rapport', soon: 'Paiement bientôt disponible',
+      notReady: "Le paiement en ligne pour ce rapport est en cours de mise en place. Contactez-nous pour commander un exemplaire.",
+      'rp-eyebrow': 'Aperçu Gratuit',
+      'rp-lede': 'Indiquez-nous vos coordonnées et le téléchargement démarrera immédiatement.',
+      'rp-label-fn': 'Prénom', 'rp-label-ln': 'Nom de famille',
+      'rp-label-email': 'Courriel professionnel', 'rp-label-org': 'Organisation (facultatif)',
+      'rp-consent-text': "Je souhaite recevoir occasionnellement les analyses et les annonces de nouveaux rapports de B² Advisory. Je peux me désabonner à tout moment.",
+      'rp-submit': "Télécharger l'Aperçu →", 'rp-sending': 'Préparation…',
+      'rp-privacy': "Vos coordonnées servent uniquement à vous transmettre cet aperçu et, si vous y consentez, les nouvelles de B² Advisory. Elles ne sont jamais partagées.",
+      'rp-success-text': "Le téléchargement de votre aperçu a commencé. S'il ne démarre pas, utilisez le bouton ci-dessous.",
+      'rp-download-again': 'Télécharger à Nouveau', 'rp-buy': 'Acheter le Rapport Complet',
+      errRequired: 'Veuillez renseigner votre prénom, votre nom et votre adresse courriel.',
+      errEmail: 'Veuillez entrer une adresse courriel valide.'
+    }
+  };
+
+  (function () {
+    const LEAD_KEY = 'b2-report-lead';
+    let activeReport = null;
+
+    const curLang = () => (document.documentElement.lang === 'fr' ? 'fr' : 'en');
+    const t = (k) => REPORTS_I18N[curLang()][k];
+    const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+    function loadLead() {
+      try { return JSON.parse(localStorage.getItem(LEAD_KEY)) || null; } catch (e) { return null; }
+    }
+    function saveLead(lead) {
+      try { localStorage.setItem(LEAD_KEY, JSON.stringify(lead)); } catch (e) { /* storage unavailable */ }
+    }
+
+    const isConfigured = (url) => !!url && !/REPLACE/i.test(url);
+
+    function formatPrice(r) {
+      try {
+        return new Intl.NumberFormat(curLang() === 'fr' ? 'fr-CA' : 'en-CA',
+          { style: 'currency', currency: r.currency, maximumFractionDigits: 0 }).format(r.price);
+      } catch (e) { return r.price + ' ' + r.currency; }
+    }
+
+    function checkoutUrlFor(r) {
+      const url = new URL(r.checkoutUrl);
+      url.searchParams.set('embed', '1');
+      url.searchParams.set('checkout[custom][report]', r.id);
+      url.searchParams.set('checkout[custom][lang]', curLang());
+      const lead = loadLead();
+      if (lead && lead.email) {
+        url.searchParams.set('checkout[email]', lead.email);
+        url.searchParams.set('checkout[name]', (lead.fn + ' ' + lead.ln).trim());
+      }
+      return url.toString();
+    }
+
+    function openCheckout(r, noteEl) {
+      if (!isConfigured(r.checkoutUrl)) {
+        if (noteEl) { noteEl.textContent = t('notReady'); noteEl.style.display = 'block'; }
+        return;
+      }
+      const url = checkoutUrlFor(r);
+      if (typeof window.createLemonSqueezy === 'function' && !window.LemonSqueezy) window.createLemonSqueezy();
+      if (window.LemonSqueezy && window.LemonSqueezy.Url && window.LemonSqueezy.Url.Open) {
+        window.LemonSqueezy.Url.Open(url);
+      } else {
+        window.location.href = url.replace('embed=1', 'embed=0');
+      }
+    }
+
+    function coverSvg(i) {
+      const shapes = [
+        '<rect x="30" y="30" width="110" height="110" fill="none" stroke="#E8F5F3" stroke-width="1"/><rect x="90" y="10" width="60" height="60" fill="none" stroke="#3DD9C0" stroke-width="1.5"/>',
+        '<circle cx="95" cy="75" r="30" fill="none" stroke="#3DD9C0" stroke-width="1.5"/><circle cx="95" cy="75" r="62" fill="none" stroke="#E8F5F3" stroke-width="1"/>',
+        '<path d="M10 140 L50 90 L90 110 L130 40 L165 70" fill="none" stroke="#3DD9C0" stroke-width="1.5"/><rect x="40" y="30" width="110" height="110" fill="none" stroke="#E8F5F3" stroke-width="1"/>'
+      ];
+      return '<svg viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + shapes[i % shapes.length] + '</svg>';
+    }
+
+    function renderReports() {
+      const lang = curLang();
+      const grid = $('reports-grid');
+      if (!grid) return;
+      grid.innerHTML = REPORTS.map((r, i) => {
+        const ready = isConfigured(r.checkoutUrl);
+        return `
+        <article class="report-card">
+          <div class="report-cover">
+            ${coverSvg(i)}
+            <div class="report-topic">${esc(r.topic[lang])}</div>
+            <div class="report-edition">${esc(r.edition[lang])}</div>
+          </div>
+          <div class="report-body">
+            <h3 class="report-title">${esc(r.title[lang])}</h3>
+            <p class="report-summary">${esc(r.summary[lang])}</p>
+            <div class="report-meta">${r.pages} ${t('pages')} · ${t('pdf')}</div>
+            <div class="report-price">${formatPrice(r)}</div>
+            <div class="report-actions">
+              <a class="report-btn report-btn--preview" href="#" data-preview="${esc(r.id)}">${t('preview')}</a>
+              <a class="report-btn report-btn--buy" href="${ready ? esc(r.checkoutUrl) : '#'}" data-buy="${esc(r.id)}">${t('buy')}</a>
+              <div class="report-note" data-note="${esc(r.id)}"></div>
+            </div>
+          </div>
+        </article>`;
+      }).join('');
+    }
+
+    /* ── Modal ── */
+    function applyModalLang() {
+      ['rp-eyebrow','rp-lede','rp-label-fn','rp-label-ln','rp-label-email','rp-label-org',
+       'rp-consent-text','rp-privacy','rp-success-text','rp-download-again','rp-buy'].forEach(id => {
+        const el = $(id); if (el) el.textContent = t(id);
+      });
+      const btn = $('rp-submit'); if (btn && !btn.disabled) btn.textContent = t('rp-submit');
+      if (activeReport) $('rp-title').textContent = activeReport.title[curLang()];
+    }
+
+    function openModal(r) {
+      activeReport = r;
+      applyModalLang();
+      $('rp-form-wrap').style.display = 'block';
+      $('rp-success').style.display = 'none';
+      $('rp-message').style.display = 'none';
+      const lead = loadLead();
+      if (lead) {
+        $('rp-fn').value = lead.fn || ''; $('rp-ln').value = lead.ln || '';
+        $('rp-email').value = lead.email || ''; $('rp-org').value = lead.org || '';
+      }
+      $('rp-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => $(lead ? 'rp-submit' : 'rp-fn').focus(), 50);
+    }
+
+    function closeModal() {
+      $('rp-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function startDownload(url) {
+      const a = document.createElement('a');
+      a.href = url; a.download = url.split('/').pop();
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    function showMsg(msg) {
+      const el = $('rp-message');
+      el.textContent = msg;
+      el.className = 'form-message form-message--error';
+      el.style.display = 'block';
+    }
+
+    async function submitLead(e) {
+      e.preventDefault();
+      if ($('rp-botcheck').checked) return;
+      const r = activeReport; if (!r) return;
+      const lead = {
+        fn: $('rp-fn').value.trim(), ln: $('rp-ln').value.trim(),
+        email: $('rp-email').value.trim(), org: $('rp-org').value.trim()
+      };
+      const consent = $('rp-consent').checked;
+      if (!lead.fn || !lead.ln || !lead.email) return showMsg(t('errRequired'));
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)) return showMsg(t('errEmail'));
+
+      const btn = $('rp-submit');
+      btn.disabled = true; btn.textContent = t('rp-sending');
+
+      const lang = curLang();
+      const message =
+        `Report: ${r.title.en}\nReport ID: ${r.id}\nLanguage: ${lang.toUpperCase()}\n` +
+        `First Name: ${lead.fn}\nLast Name: ${lead.ln}\nEmail: ${lead.email}\nOrganisation: ${lead.org || '—'}\n` +
+        `Marketing consent: ${consent ? 'YES' : 'no'}\nTimestamp: ${new Date().toISOString()}`;
+
+      try {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            access_key: 'c62f2f46-70fb-42b1-91e2-95aa934be7c6',
+            subject: `Report preview download — ${r.title.en} — ${lead.fn} ${lead.ln}${lead.org ? ' · ' + lead.org : ''}`,
+            from_name: `${lead.fn} ${lead.ln}`,
+            reply_to: lead.email,
+            message: message,
+            botcheck: ''
+          })
+        });
+      } catch (err) {
+        /* Never block the download if lead capture fails */
+        console.warn('[reports] lead capture failed', err);
+      }
+
+      saveLead(lead);
+      startDownload(r.previewUrl);
+
+      btn.disabled = false; btn.textContent = t('rp-submit');
+      $('rp-form-wrap').style.display = 'none';
+      $('rp-success').style.display = 'block';
+      $('rp-download-again').href = r.previewUrl;
+      const buy = $('rp-buy');
+      buy.style.display = isConfigured(r.checkoutUrl) ? 'block' : 'none';
+    }
+
+    /* ── Wiring ── */
+    document.addEventListener('click', (e) => {
+      const p = e.target.closest('[data-preview]');
+      if (p) { e.preventDefault(); openModal(REPORTS.find(r => r.id === p.dataset.preview)); return; }
+      const b = e.target.closest('[data-buy]');
+      if (b) {
+        e.preventDefault();
+        const r = REPORTS.find(x => x.id === b.dataset.buy);
+        openCheckout(r, document.querySelector(`[data-note="${b.dataset.buy}"]`));
+      }
+    });
+    $('rp-close').addEventListener('click', closeModal);
+    $('rp-modal').addEventListener('click', (e) => { if (e.target.id === 'rp-modal') closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    $('rp-form').addEventListener('submit', submitLead);
+    $('rp-buy').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (activeReport) { closeModal(); openCheckout(activeReport); }
+    });
+
+    /* Called from setLang() */
+    window.applyReportsLang = function () {
+      const map = REPORTS_I18N[curLang()];
+      const text = { 'nav-reports': 1, 'section-label-reports': 1, 'reports-intro': 1 };
+      ['nav-reports','section-label-reports','section-headline-reports','reports-intro','reports-footnote'].forEach(id => {
+        const el = $(id); if (!el) return;
+        if (text[id]) el.textContent = map[id]; else el.innerHTML = map[id];
+      });
+      renderReports();
+      applyModalLang();
+    };
+
+    renderReports();
   })();
 </script>
 </body>
