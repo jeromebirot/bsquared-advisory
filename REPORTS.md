@@ -5,7 +5,9 @@ The **Industry Reports** section (`#reports` in `index.html`) is driven by the `
 ## Add or edit a report
 1. Put the free preview PDF in `reports/previews/` (e.g. `reports/previews/hyperscaler-selection-preview.pdf`).
 2. In Lemon Squeezy, create a product for the full report, upload the full PDF as the product file, and copy its checkout link (Product → Share → Checkout link).
-3. Add or edit an entry in `REPORTS`: `id`, EN/FR `topic` / `title` / `summary` / `edition`, `pages`, `price`, `currency`, `previewUrl`, `checkoutUrl`.
+3. Add or edit an entry in `REPORTS`: `id`, EN/FR `topic` / `title` / `summary` / `edition`, `highlights` (optional bullet points), `pages`, `cover` (image in `reports/covers/`), `price` (leave `null` to hide the price), `currency`, `previewUrl`, `checkoutUrl`.
+
+With a single report the section shows one wide featured card; with two or more it switches to a grid automatically.
 
 Never commit a full report to this repo: it's public, so anything in it can be downloaded.
 
