@@ -748,13 +748,15 @@
   .report-price {
     font-family: 'Playfair Display', serif;
     font-size: 26px; color: var(--text-dark);
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .report-price small {
     font-family: 'Rajdhani', sans-serif;
     font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
     text-transform: uppercase; color: var(--text-muted); margin-left: 6px;
   }
+
+  .report-licence { font-size: 15px; color: var(--text-muted); margin: -10px 0 20px; line-height: 1.5; }
 
   .report-actions { display: flex; flex-direction: column; gap: 10px; }
 
@@ -1766,7 +1768,7 @@
   <div class="reports-grid" id="reports-grid"></div>
 
   <p class="reports-footnote" id="reports-footnote">
-    Need a multi-seat licence or a tailored briefing? <a href="#contact">Get in touch →</a>
+    Group-wide licence or a tailored briefing? <a href="#contact">Get in touch →</a>
   </p>
 </section>
 
@@ -1968,7 +1970,7 @@
       language: 'en',               // report is written in English
       pages: 47,
       cover: 'reports/covers/towerco-canada-2026.jpg',
-      price: null, currency: 'USD', // set the price once decided, e.g. price: 495
+      price: 2995, currency: 'USD', // organisation licence
       previewUrl: 'reports/previews/towerco-canada-2026-preview.pdf',
       checkoutUrl: 'https://REPLACE-STORE.lemonsqueezy.com/buy/REPLACE-VARIANT-ID'
     }
@@ -1980,7 +1982,8 @@
       'section-label-reports': 'Industry Reports',
       'section-headline-reports': 'Independent analysis.<br><em>Executive-ready insight.</em>',
       'reports-intro': 'Concise, independent research on the technology decisions shaping telecom and digital infrastructure. Download a free preview of any report, or purchase the full edition for immediate delivery.',
-      'reports-footnote': 'Need a multi-seat licence or a tailored briefing? <a href="#contact">Get in touch →</a>',
+      'reports-footnote': 'Group-wide licence or a tailored briefing? <a href="#contact">Get in touch →</a>',
+      licence: 'Organisation licence · internal use by all employees of the purchasing organisation',
       pages: 'pages', pdf: 'PDF', inEnglish: 'In English', previewIncludes: 'Free preview: Executive Summary and Section 1',
       preview: 'Free Preview', buy: 'Buy Full Report', soon: 'Checkout coming soon',
       notReady: 'Online checkout for this report is being set up. Please get in touch to order a copy.',
@@ -2001,7 +2004,8 @@
       'section-label-reports': 'Rapports Sectoriels',
       'section-headline-reports': 'Analyse indépendante.<br><em>Éclairage pour dirigeants.</em>',
       'reports-intro': "Des analyses indépendantes et concises sur les décisions technologiques qui façonnent les télécoms et les infrastructures numériques. Téléchargez gratuitement un aperçu de chaque rapport, ou achetez l'édition complète, livrée immédiatement.",
-      'reports-footnote': 'Besoin d’une licence multi-utilisateurs ou d’un briefing sur mesure ? <a href="#contact">Nous contacter →</a>',
+      'reports-footnote': 'Licence pour l’ensemble d’un groupe ou briefing sur mesure ? <a href="#contact">Nous contacter →</a>',
+      licence: "Licence organisation · usage interne par tous les employés de l'organisation acheteuse",
       pages: 'pages', pdf: 'PDF', inEnglish: 'Rapport en anglais', previewIncludes: 'Aperçu gratuit : sommaire exécutif et section 1',
       preview: 'Aperçu Gratuit', buy: 'Acheter le Rapport', soon: 'Paiement bientôt disponible',
       notReady: "Le paiement en ligne pour ce rapport est en cours de mise en place. Contactez-nous pour commander un exemplaire.",
@@ -2096,7 +2100,7 @@
         if (r.language === 'en' && lang === 'fr') meta.push(t('inEnglish'));
         const highlights = r.highlights
           ? `<ul class="report-highlights">${r.highlights[lang].map(h => `<li>${esc(h)}</li>`).join('')}</ul>` : '';
-        const price = (r.price != null) ? `<div class="report-price">${formatPrice(r)}</div>` : '';
+        const price = (r.price != null) ? `<div class="report-price">${formatPrice(r)}</div><div class="report-licence">${t('licence')}</div>` : '';
         return `
         <article class="report-card">
           ${cover}
