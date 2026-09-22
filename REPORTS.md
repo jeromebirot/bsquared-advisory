@@ -13,5 +13,5 @@ Never commit a full report to this repo: it's public, so anything in it can be d
 
 ## What happens on the site
 - **Free Preview** opens a form (name, email, optional organisation, optional marketing opt-in). Each submission is emailed to you via Web3Forms, then the preview downloads. The visitor's details are remembered in their browser for next time.
-- **Buy Full Report** opens the Lemon Squeezy checkout overlay, pre-filled with the visitor's email if they already requested a preview. Lemon Squeezy takes payment, handles sales tax/VAT, and emails the buyer the download link.
+- **Buy Full Report** opens the full-page Lemon Squeezy checkout in a new tab, pre-filled with the visitor's email if they already requested a preview. Lemon Squeezy takes payment, handles sales tax/VAT, and emails the buyer the download link.
 - Any `checkoutUrl` still containing `REPLACE` shows a "checkout being set up, please get in touch" note instead of opening checkout.

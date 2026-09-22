@@ -1937,8 +1937,6 @@
   </div>
 </div>
 
-<!-- Lemon Squeezy checkout overlay -->
-<script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
 
 <script>
   /* ════════════════════════════════════
@@ -2050,7 +2048,6 @@
 
     function checkoutUrlFor(r) {
       const url = new URL(r.checkoutUrl);
-      url.searchParams.set('embed', '1');
       url.searchParams.set('checkout[custom][report]', r.id);
       url.searchParams.set('checkout[custom][lang]', curLang());
       const lead = loadLead();
@@ -2066,13 +2063,11 @@
         if (noteEl) { noteEl.textContent = t('notReady'); noteEl.style.display = 'block'; }
         return;
       }
+      // Full-page Lemon Squeezy checkout in a new tab (wider than the overlay; the site stays open)
       const url = checkoutUrlFor(r);
-      if (typeof window.createLemonSqueezy === 'function' && !window.LemonSqueezy) window.createLemonSqueezy();
-      if (window.LemonSqueezy && window.LemonSqueezy.Url && window.LemonSqueezy.Url.Open) {
-        window.LemonSqueezy.Url.Open(url);
-      } else {
-        window.location.href = url.replace('embed=1', 'embed=0');
-      }
+      const win = window.open(url, '_blank');
+      if (win) win.opener = null;             // detach the new tab from this page
+      else window.location.href = url;        // pop-up blocked: open in this tab instead
     }
 
     function coverSvg(i) {
