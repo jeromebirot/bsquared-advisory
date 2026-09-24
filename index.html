@@ -1761,7 +1761,7 @@
   <div class="section-rule"></div>
   <p class="reports-intro" id="reports-intro">
     Concise, independent research on the technology decisions shaping telecom and digital infrastructure.
-    Download a free preview of any report, or purchase the full edition for immediate delivery.
+    Download a free preview of any report, or purchase the full edition, delivered by email.
   </p>
 
   <!-- Cards are rendered from the REPORTS list in the script at the bottom of this page. -->
@@ -1942,9 +1942,9 @@
   /* ════════════════════════════════════
      INDUSTRY REPORTS — edit this list to add, change or remove reports.
      previewUrl  : free preview PDF, committed under /reports/previews/
-     checkoutUrl : Lemon Squeezy "Share → Checkout link" for the product
+     checkoutUrl : Stripe Payment Link for the product (buy.stripe.com/…)
                    (anything containing REPLACE is treated as not yet set up)
-     The full report is uploaded to Lemon Squeezy only — never to this repo.
+     The full report is emailed to buyers after payment — never commit it to this repo.
   ════════════════════════════════════ */
   const REPORTS = [
     {
@@ -1970,7 +1970,7 @@
       cover: 'reports/covers/towerco-canada-2026.jpg',
       price: 2995, currency: 'USD', // organisation licence
       previewUrl: 'reports/previews/towerco-canada-2026-preview.pdf',
-      checkoutUrl: 'https://bsquared.lemonsqueezy.com/checkout/buy/8b5afdfc-9b3e-4263-b5ca-a485ff7c8e0a'
+      checkoutUrl: 'https://buy.stripe.com/00weVdfaiazW8hbcEL4F200'
     }
   ];
 
@@ -1979,7 +1979,7 @@
       'nav-reports': 'Reports',
       'section-label-reports': 'Industry Reports',
       'section-headline-reports': 'Independent analysis.<br><em>Executive-ready insight.</em>',
-      'reports-intro': 'Concise, independent research on the technology decisions shaping telecom and digital infrastructure. Download a free preview of any report, or purchase the full edition for immediate delivery.',
+      'reports-intro': 'Concise, independent research on the technology decisions shaping telecom and digital infrastructure. Download a free preview of any report, or purchase the full edition, delivered by email.',
       'reports-footnote': 'Group-wide licence or a tailored briefing? <a href="#contact">Get in touch →</a>',
       licence: 'Organisation licence · internal use by all employees of the purchasing organisation',
       pages: 'pages', pdf: 'PDF', inEnglish: 'In English', previewIncludes: 'Free preview: Executive Summary and Section 1',
@@ -2001,7 +2001,7 @@
       'nav-reports': 'Rapports',
       'section-label-reports': 'Rapports Sectoriels',
       'section-headline-reports': 'Analyse indépendante.<br><em>Éclairage pour dirigeants.</em>',
-      'reports-intro': "Des analyses indépendantes et concises sur les décisions technologiques qui façonnent les télécoms et les infrastructures numériques. Téléchargez gratuitement un aperçu de chaque rapport, ou achetez l'édition complète, livrée immédiatement.",
+      'reports-intro': "Des analyses indépendantes et concises sur les décisions technologiques qui façonnent les télécoms et les infrastructures numériques. Téléchargez gratuitement un aperçu de chaque rapport, ou achetez l'édition complète, livrée par courriel.",
       'reports-footnote': 'Licence pour l’ensemble d’un groupe ou briefing sur mesure ? <a href="#contact">Nous contacter →</a>',
       licence: "Licence organisation · usage interne par tous les employés de l'organisation acheteuse",
       pages: 'pages', pdf: 'PDF', inEnglish: 'Rapport en anglais', previewIncludes: 'Aperçu gratuit : sommaire exécutif et section 1',
@@ -2047,14 +2047,12 @@
     }
 
     function checkoutUrlFor(r) {
+      // Stripe Payment Link parameters: client_reference_id tags the order with the report;
+      // prefilled_email fills the buyer's email if they already requested the preview.
       const url = new URL(r.checkoutUrl);
-      url.searchParams.set('checkout[custom][report]', r.id);
-      url.searchParams.set('checkout[custom][lang]', curLang());
+      url.searchParams.set('client_reference_id', r.id);
       const lead = loadLead();
-      if (lead && lead.email) {
-        url.searchParams.set('checkout[email]', lead.email);
-        url.searchParams.set('checkout[name]', (lead.fn + ' ' + lead.ln).trim());
-      }
+      if (lead && lead.email) url.searchParams.set('prefilled_email', lead.email);
       return url.toString();
     }
 
@@ -2063,7 +2061,7 @@
         if (noteEl) { noteEl.textContent = t('notReady'); noteEl.style.display = 'block'; }
         return;
       }
-      // Full-page Lemon Squeezy checkout in a new tab (wider than the overlay; the site stays open)
+      // Stripe checkout in a new tab so the site stays open
       const url = checkoutUrlFor(r);
       const win = window.open(url, '_blank');
       if (win) win.opener = null;             // detach the new tab from this page
