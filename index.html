@@ -1970,7 +1970,9 @@
       cover: 'reports/covers/towerco-canada-2026.jpg',
       price: 2995, currency: 'USD', // organisation licence
       previewUrl: 'reports/previews/towerco-canada-2026-preview.pdf',
-      checkoutUrl: 'https://buy.stripe.com/00weVdfaiazW8hbcEL4F200'
+      checkoutUrl: 'https://buy.stripe.com/00weVdfaiazW8hbcEL4F200',
+      // US$1 test link — used only when the page is opened with ?test-checkout
+      testCheckoutUrl: 'https://buy.stripe.com/9B64gz1js0Zm54ZdIP4F201'
     }
   ];
 
@@ -2046,11 +2048,14 @@
       } catch (e) { return r.price + ' ' + r.currency; }
     }
 
+    const TEST_CHECKOUT = /(^|[?&])test-checkout(=|&|$)/.test(window.location.search);
+
     function checkoutUrlFor(r) {
       // Stripe Payment Link parameters: client_reference_id tags the order with the report;
       // prefilled_email fills the buyer's email if they already requested the preview.
-      const url = new URL(r.checkoutUrl);
-      url.searchParams.set('client_reference_id', r.id);
+      const base = (TEST_CHECKOUT && r.testCheckoutUrl) ? r.testCheckoutUrl : r.checkoutUrl;
+      const url = new URL(base);
+      url.searchParams.set('client_reference_id', TEST_CHECKOUT ? r.id + '-test' : r.id);
       const lead = loadLead();
       if (lead && lead.email) url.searchParams.set('prefilled_email', lead.email);
       return url.toString();
@@ -2242,6 +2247,15 @@
     };
 
     renderReports();
+
+    if (TEST_CHECKOUT) {
+      const b = document.createElement('div');
+      b.textContent = 'TEST CHECKOUT MODE: Buy buttons use the US$1 test link';
+      b.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:300;' +
+        'background:#e0a030;color:#0D3D3A;font:700 14px Rajdhani,sans-serif;letter-spacing:2px;' +
+        'padding:10px 18px;border-radius:2px;box-shadow:0 4px 14px rgba(0,0,0,.25)';
+      document.body.appendChild(b);
+    }
   })();
 </script>
 </body>
