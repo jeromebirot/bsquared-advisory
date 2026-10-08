@@ -848,39 +848,70 @@
   }
   .report-preview-note { font-size: 14px; color: var(--text-muted); margin-top: 12px; letter-spacing: 0.3px; }
 
-  /* Single featured report: wide card, cover left, details right */
-  .reports-grid--single { grid-template-columns: 1fr; max-width: 1180px; }
-  .reports-grid--single .report-card { display: grid; grid-template-columns: 5fr 6fr; align-items: stretch; }
-  .reports-grid--single .report-cover--img {
-    display: flex; align-items: center; justify-content: center;
-    padding: 40px 32px; height: 100%;
+  /* Report tiles: two per row — thumbnail + title, short summary, "What's inside", buy bar */
+  .reports-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1180px; gap: 24px; align-items: start; }
+  .report-body { padding: 26px 26px 22px; }
+  .report-head { display: grid; grid-template-columns: 96px 1fr; gap: 20px; align-items: start; margin-bottom: 14px; }
+  .report-head--nothumb { grid-template-columns: 1fr; }
+  .report-thumb {
+    display: block; width: 96px; height: auto;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25); border: 0.5px solid rgba(13,61,58,0.15);
   }
-  .reports-grid--single .report-cover--img img {
-    width: auto; max-width: 100%; max-height: 560px;
-    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-    border: 0.5px solid rgba(61,217,192,0.25);
+  .report-head .report-kicker { font-size: 12px; margin-bottom: 8px; }
+  .report-head .report-title { font-size: 21px; margin: 0; }
+  .report-summary {
+    font-size: 15.5px; line-height: 1.6; margin-bottom: 10px; flex: none;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .reports-grid--single .report-body { padding: 40px 44px 36px; }
-  .reports-grid--single .report-title { font-size: 30px; }
-  .reports-grid--single .report-actions { flex-direction: row; }
-  .reports-grid--single .report-actions .report-btn { flex: 1; }
-  .reports-grid--single .report-note { flex-basis: 100%; }
-  .reports-grid--single .report-actions { flex-wrap: wrap; }
+  .report-details { margin: 0 0 14px; }
+  .report-details summary {
+    display: inline-flex; align-items: center; gap: 10px;
+    cursor: pointer; list-style: none; user-select: none;
+    padding: 8px 14px; border: 1px solid rgba(13,61,58,0.25); border-radius: 2px;
+    background: rgba(61,217,192,0.08);
+    font-size: 13px; font-weight: 700; letter-spacing: 1.8px;
+    text-transform: uppercase; color: var(--teal-deep);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .report-details summary::-webkit-details-marker { display: none; }
+  .report-details summary:hover, .report-details summary:focus-visible {
+    border-color: var(--teal-accent); background: rgba(61,217,192,0.16); outline: none;
+  }
+  .report-details .rd-chev {
+    width: 8px; height: 8px; margin-top: -4px;
+    border-right: 2px solid var(--teal-deep); border-bottom: 2px solid var(--teal-deep);
+    transform: rotate(45deg); transition: transform 0.2s, margin 0.2s;
+  }
+  .report-details[open] .rd-chev { transform: rotate(-135deg); margin-top: 4px; }
+  .report-details .rd-close { display: none; }
+  .report-details[open] .rd-open { display: none; }
+  .report-details[open] .rd-close { display: inline; }
+  .report-details .report-highlights { margin: 12px 0 0; }
+  .report-highlights li { font-size: 15px; }
+  .report-meta { margin: auto 0 0; padding-top: 4px; }
+  .report-buybar {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 14px; padding-top: 16px; border-top: 1px solid rgba(13,61,58,0.1);
+  }
+  .report-buybar .report-price { margin: 0 6px 0 0; font-size: 24px; white-space: nowrap; }
+  .report-buybar .report-actions { flex-direction: row; flex: 1; justify-content: flex-end; gap: 8px; }
+  .report-buybar .report-btn { padding: 12px 14px; font-size: 13px; letter-spacing: 1.6px; white-space: nowrap; }
+  .report-fineprint { font-size: 13px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
 
   @media (max-width: 1100px) {
-    .reports-grid { grid-template-columns: repeat(2, 1fr); }
-    .reports-grid--single { grid-template-columns: 1fr; }
-    .reports-grid--single .report-card { grid-template-columns: 1fr; }
+    .reports-grid { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
   }
   @media (max-width: 768px) {
-    .reports-grid { grid-template-columns: 1fr; }
     .reports-intro { margin-bottom: 40px; }
     .rp-dialog { padding: 36px 22px 28px; }
     .rp-title { font-size: 22px; }
-    .reports-grid--single .report-body { padding: 28px 22px 24px; }
-    .reports-grid--single .report-cover--img { padding: 24px 18px; }
-    .reports-grid--single .report-title { font-size: 24px; }
-    .reports-grid--single .report-actions { flex-direction: column; }
+    .report-body { padding: 22px 20px 20px; }
+    .report-head { grid-template-columns: 76px 1fr; gap: 16px; }
+    .report-thumb { width: 76px; }
+    .report-head .report-title { font-size: 19px; }
+    .report-buybar { flex-wrap: wrap; }
+    .report-buybar .report-actions { flex-basis: 100%; }
+    .report-buybar .report-btn { flex: 1; min-width: 0; white-space: normal; padding: 12px 8px; }
   }
 
   /* Nav fit with four links on laptop-width screens */
@@ -1948,6 +1979,31 @@
   ════════════════════════════════════ */
   const REPORTS = [
     {
+      id: 'aidc-canada-2026',
+      topic:   { en: 'AI · Data Centres · Canada', fr: 'IA · Centres de données · Canada' },
+      title:   { en: 'AI Data Centre Capacity in Canada: Hyperscalers versus AI-Native Providers',
+                 fr: "Capacité des centres de données IA au Canada : hyperscalers et fournisseurs natifs de l'IA" },
+      summary: { en: "Power, not capital, now decides who builds AI compute in Canada. A strategic, power and market reference for investors, operators and boards — five participant segments across a five-layer value chain, the TELUS and Bell models, lease and credit structures, the provincial power-access regimes, liquid cooling, and the sovereignty rules now shaping funding and grid access.",
+                 fr: "C'est l'électricité, et non le capital, qui décide désormais qui construit la capacité de calcul IA au Canada. Une référence stratégique, énergétique et de marché pour investisseurs, exploitants et conseils d'administration — cinq segments d'acteurs sur une chaîne de valeur à cinq niveaux, les modèles de TELUS et de Bell, baux et structures de crédit, régimes provinciaux d'accès à l'électricité, refroidissement liquide et règles de souveraineté qui encadrent désormais le financement et le raccordement au réseau." },
+      highlights: {
+        en: ['19.6 GW of data-centre load seeking connection in Alberta vs a 12.8 GW peak',
+             "Four provincial power-access models, from BYOG to Quebec's proposed 13¢ rate",
+             'Hyperscalers, neoclouds, Canadian GPU clouds and AI labs compared',
+             '15 sections · 7 proprietary data exhibits · fully sourced appendix'],
+        fr: ["19,6 GW de charge de centres de données en attente de raccordement en Alberta, pour une pointe de 12,8 GW",
+             "Quatre modèles provinciaux d'accès à l'électricité, de l'autoproduction au tarif de 13 ¢ proposé au Québec",
+             "Hyperscalers, néoclouds, clouds GPU canadiens et laboratoires d'IA comparés",
+             "15 sections · 7 exhibits de données exclusifs · annexe entièrement sourcée"]
+      },
+      edition: { en: 'October 2026 Edition', fr: 'Édition octobre 2026' },
+      language: 'en',               // report is written in English
+      pages: 48,
+      cover: 'reports/covers/aidc-canada-2026.jpg',
+      price: 2995, currency: 'USD', // organisation licence
+      previewUrl: 'reports/previews/aidc-canada-2026-preview.pdf',
+      checkoutUrl: 'https://buy.stripe.com/fZueVd6DMeQc9lf8ov4F202'
+    },
+    {
       id: 'towerco-canada-2026',
       topic:   { en: 'Towers · Infrastructure · Canada', fr: 'Pylônes · Infrastructure · Canada' },
       title:   { en: 'Mobile Tower Deployment and the TowerCo Market in Canada',
@@ -1985,6 +2041,7 @@
       'reports-footnote': 'Group-wide licence or a tailored briefing? <a href="#contact">Get in touch →</a>',
       licence: 'Organisation licence · internal use by all employees of the purchasing organisation',
       pages: 'pages', pdf: 'PDF', inEnglish: 'In English', previewIncludes: 'Free preview: Executive Summary and Section 1',
+      whatsInside: "See what's inside", hideDetails: 'Hide details', licenceShort: 'Organisation licence',
       preview: 'Free Preview', buy: 'Buy Full Report', soon: 'Checkout coming soon',
       notReady: 'Online checkout for this report is being set up. Please get in touch to order a copy.',
       'rp-eyebrow': 'Free Preview',
@@ -2007,6 +2064,7 @@
       'reports-footnote': 'Licence pour l’ensemble d’un groupe ou briefing sur mesure ? <a href="#contact">Nous contacter →</a>',
       licence: "Licence organisation · usage interne par tous les employés de l'organisation acheteuse",
       pages: 'pages', pdf: 'PDF', inEnglish: 'Rapport en anglais', previewIncludes: 'Aperçu gratuit : sommaire exécutif et section 1',
+      whatsInside: 'Voir le contenu', hideDetails: 'Masquer le contenu', licenceShort: 'Licence organisation',
       preview: 'Aperçu Gratuit', buy: 'Acheter le Rapport', soon: 'Paiement bientôt disponible',
       notReady: "Le paiement en ligne pour ce rapport est en cours de mise en place. Contactez-nous pour commander un exemplaire.",
       'rp-eyebrow': 'Aperçu Gratuit',
@@ -2089,32 +2147,36 @@
       grid.classList.toggle('reports-grid--single', REPORTS.length === 1);
       grid.innerHTML = REPORTS.map((r, i) => {
         const ready = isConfigured(r.checkoutUrl);
-        const cover = r.cover
-          ? `<div class="report-cover report-cover--img"><img src="${esc(r.cover)}" alt="${esc(r.title[lang])}" loading="lazy"/></div>`
-          : `<div class="report-cover">${coverSvg(i)}
-               <div class="report-topic">${esc(r.topic[lang])}</div>
-               <div class="report-edition">${esc(r.edition[lang])}</div></div>`;
+        const thumb = r.cover ? `<img class="report-thumb" src="${esc(r.cover)}" alt="${esc(r.title[lang])}" loading="lazy"/>` : '';
         const meta = [r.edition[lang], `${r.pages} ${t('pages')}`, t('pdf')];
         if (r.language === 'en' && lang === 'fr') meta.push(t('inEnglish'));
         const highlights = r.highlights
-          ? `<ul class="report-highlights">${r.highlights[lang].map(h => `<li>${esc(h)}</li>`).join('')}</ul>` : '';
-        const price = (r.price != null) ? `<div class="report-price">${formatPrice(r)}</div><div class="report-licence">${t('licence')}</div>` : '';
+          ? `<details class="report-details"><summary><span class="rd-open">${t('whatsInside')}</span><span class="rd-close">${t('hideDetails')}</span><span class="rd-chev" aria-hidden="true"></span></summary>
+               <ul class="report-highlights">${r.highlights[lang].map(h => `<li>${esc(h)}</li>`).join('')}</ul></details>` : '';
+        const price = (r.price != null) ? `<div class="report-price" title="${esc(t('licence'))}">${formatPrice(r)}</div>` : '';
+        const fine = [r.price != null ? t('licenceShort') : '', t('previewIncludes')].filter(Boolean).join(' · ');
         return `
         <article class="report-card">
-          ${cover}
           <div class="report-body">
-            ${r.cover ? `<div class="report-kicker">${esc(r.topic[lang])}</div>` : ''}
-            <h3 class="report-title">${esc(r.title[lang])}</h3>
+            <div class="report-head${thumb ? '' : ' report-head--nothumb'}">
+              ${thumb}
+              <div>
+                <div class="report-kicker">${esc(r.topic[lang])}</div>
+                <h3 class="report-title">${esc(r.title[lang])}</h3>
+              </div>
+            </div>
             <p class="report-summary">${esc(r.summary[lang])}</p>
             ${highlights}
             <div class="report-meta">${meta.map(esc).join(' · ')}</div>
-            ${price}
-            <div class="report-actions">
-              <a class="report-btn report-btn--preview" href="#" data-preview="${esc(r.id)}">${t('preview')}</a>
-              <a class="report-btn report-btn--buy" href="${ready ? esc(r.checkoutUrl) : '#'}" data-buy="${esc(r.id)}">${t('buy')}</a>
-              <div class="report-note" data-note="${esc(r.id)}"></div>
+            <div class="report-buybar">
+              ${price}
+              <div class="report-actions">
+                <a class="report-btn report-btn--preview" href="#" data-preview="${esc(r.id)}">${t('preview')}</a>
+                <a class="report-btn report-btn--buy" href="${ready ? esc(r.checkoutUrl) : '#'}" data-buy="${esc(r.id)}">${t('buy')}</a>
+              </div>
             </div>
-            <div class="report-preview-note">${t('previewIncludes')}</div>
+            <div class="report-note" data-note="${esc(r.id)}"></div>
+            <div class="report-fineprint">${esc(fine)}</div>
           </div>
         </article>`;
       }).join('');

@@ -7,7 +7,7 @@ The **Industry Reports** section (`#reports` in `index.html`) is driven by the `
 2. In Stripe, create a product for the full report and a Payment Link for it (Payment Links → +New), and copy the link.
 3. Add or edit an entry in `REPORTS`: `id`, EN/FR `topic` / `title` / `summary` / `edition`, `highlights` (optional bullet points), `pages`, `cover` (image in `reports/covers/`), `price` (leave `null` to hide the price), `currency`, `previewUrl`, `checkoutUrl`.
 
-With a single report the section shows one wide featured card; with two or more it switches to a grid automatically.
+Reports display as compact tiles, two per row on desktop and one per row on tablets and phones: cover thumbnail and title, a three-line summary, a "See what's inside" button that expands the `highlights`, and a buy bar with the price, Free Preview and Buy Full Report. The licence wording shows in the small print under each tile.
 
 Never commit a full report to this repo: it's public, so anything in it can be downloaded.
 
