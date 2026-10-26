@@ -11,6 +11,13 @@ Reports display as compact tiles, two per row on desktop and one per row on tabl
 
 Never commit a full report to this repo: it's public, so anything in it can be downloaded.
 
+## Free whitepapers
+A whitepaper is an entry in `REPORTS` with `free: true`, `price: null` and `checkoutUrl: null`. Its `previewUrl` points to the **full** whitepaper PDF in `reports/whitepapers/` (free, so committing it is fine).
+
+- The tile shows a single **Download Free Whitepaper** button instead of Free Preview / Buy.
+- The same email-capture form opens, worded for a whitepaper; the Web3Forms email subject starts with "Whitepaper download".
+- Deep link for social posts: `https://bsquared-advisory.com/#whitepaper-5g6g` scrolls to Industry Reports and opens the download form. Add new links in `DEEP_LINKS` in the script.
+
 ## What happens on the site
 - **Free Preview** opens a form (name, email, optional organisation, optional marketing opt-in). Each submission is emailed to you via Web3Forms, then the preview downloads. The visitor's details are remembered in their browser for next time.
 - **Buy Full Report** opens the Stripe Payment Link in a new tab, tagged with the report ID (`client_reference_id`) and pre-filled with the visitor's email if they already requested a preview. After payment, the full PDF is emailed to the buyer manually (stamped with their organisation name).

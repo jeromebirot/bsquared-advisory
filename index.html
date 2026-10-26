@@ -1792,7 +1792,7 @@
   <div class="section-rule"></div>
   <p class="reports-intro" id="reports-intro">
     Concise, independent research on the technology decisions shaping telecom and digital infrastructure.
-    Download a free preview of any report, or purchase the full edition, delivered by email.
+    Download our free whitepapers, a free preview of any report, or purchase the full edition, delivered by email.
   </p>
 
   <!-- Cards are rendered from the REPORTS list in the script at the bottom of this page. -->
@@ -1979,6 +1979,32 @@
   ════════════════════════════════════ */
   const REPORTS = [
     {
+      id: 'lost-promise-5g-2026',
+      free: true,                   // free whitepaper: email capture, full download, no checkout
+      topic:   { en: 'Whitepaper · 5G · 6G · Strategy', fr: 'Livre blanc · 5G · 6G · Stratégie' },
+      title:   { en: 'The Lost Promise of 5G and the Last Chance for 6G',
+                 fr: 'La promesse perdue de la 5G et la dernière chance de la 6G' },
+      summary: { en: "Why 5G's promised revenue never materialised, and what executive teams must do differently before committing to 6G — what was promised, what happened, nine root causes, where 5G standalone is paying off, why China is the exception that proves the rule, and nine lessons with the questions to answer before committing.",
+                 fr: "Pourquoi les revenus promis par la 5G ne se sont jamais concrétisés, et ce que les équipes de direction doivent faire autrement avant de s'engager dans la 6G — ce qui avait été promis, ce qui s'est passé, neuf causes profondes, là où la 5G autonome est rentable, pourquoi la Chine est l'exception qui confirme la règle, et neuf leçons accompagnées des questions à trancher avant de s'engager." },
+      highlights: {
+        en: ['US$204–619B of new operator revenue promised by 2026 — and a return of under 3% on US$275B of 5G capex',
+             'Nine root causes of the revenue gap, none of them technical',
+             "China: the exception that proves the rule, from shared networks to the Blooming Cup",
+             'Nine lessons for executive teams before 6G specifications lock in'],
+        fr: ["De 204 à 619 G$ US de nouveaux revenus promis d'ici 2026 — et un rendement inférieur à 3 % sur 275 G$ US d'investissements 5G",
+             "Neuf causes profondes du manque à gagner, aucune d'ordre technique",
+             "La Chine, l'exception qui confirme la règle : des réseaux partagés au Blooming Cup",
+             "Neuf leçons pour les équipes de direction avant le gel des spécifications 6G"]
+      },
+      edition: { en: 'October 2026', fr: 'Octobre 2026' },
+      language: 'en',               // whitepaper is written in English
+      pages: 11,
+      cover: 'reports/covers/lost-promise-5g-2026.jpg',
+      price: null,
+      previewUrl: 'reports/whitepapers/lost-promise-5g-last-chance-6g.pdf',   // the full whitepaper (free)
+      checkoutUrl: null
+    },
+    {
       id: 'aidc-canada-2026',
       topic:   { en: 'AI · Data Centres · Canada', fr: 'IA · Centres de données · Canada' },
       title:   { en: 'AI Data Centre Capacity in Canada: Hyperscalers versus AI-Native Providers',
@@ -2037,7 +2063,7 @@
       'nav-reports': 'Reports',
       'section-label-reports': 'Industry Reports',
       'section-headline-reports': 'Independent analysis.<br><em>Executive-ready insight.</em>',
-      'reports-intro': 'Concise, independent research on the technology decisions shaping telecom and digital infrastructure. Download a free preview of any report, or purchase the full edition, delivered by email.',
+      'reports-intro': 'Concise, independent research on the technology decisions shaping telecom and digital infrastructure. Download our free whitepapers, a free preview of any report, or purchase the full edition, delivered by email.',
       'reports-footnote': 'Group-wide licence or a tailored briefing? <a href="#contact">Get in touch →</a>',
       licence: 'Organisation licence · internal use by all employees of the purchasing organisation',
       pages: 'pages', pdf: 'PDF', inEnglish: 'In English', previewIncludes: 'Free preview: Executive Summary and Section 1',
@@ -2054,13 +2080,19 @@
       'rp-success-text': "Your preview is downloading. If it doesn't start, use the button below.",
       'rp-download-again': 'Download Again', 'rp-buy': 'Buy the Full Report',
       errRequired: 'Please provide your first name, last name and email address.',
-      errEmail: 'Please enter a valid email address.'
+      errEmail: 'Please enter a valid email address.',
+      download: 'Download Free Whitepaper', freeFine: 'Free whitepaper · full download',
+      'wp-eyebrow': 'Free Whitepaper',
+      'wp-lede': 'Tell us where to send it and your whitepaper will download right away.',
+      'wp-submit': 'Download Now →',
+      'wp-privacy': 'We use your details only to send this whitepaper and, if you opt in, B² Advisory updates. We never share them.',
+      'wp-success-text': "Your whitepaper is downloading. If it doesn't start, use the button below."
     },
     fr: {
       'nav-reports': 'Rapports',
       'section-label-reports': 'Rapports Sectoriels',
       'section-headline-reports': 'Analyse indépendante.<br><em>Éclairage pour dirigeants.</em>',
-      'reports-intro': "Des analyses indépendantes et concises sur les décisions technologiques qui façonnent les télécoms et les infrastructures numériques. Téléchargez gratuitement un aperçu de chaque rapport, ou achetez l'édition complète, livrée par courriel.",
+      'reports-intro': "Des analyses indépendantes et concises sur les décisions technologiques qui façonnent les télécoms et les infrastructures numériques. Téléchargez nos livres blancs gratuits, un aperçu gratuit de chaque rapport, ou achetez l'édition complète, livrée par courriel.",
       'reports-footnote': 'Licence pour l’ensemble d’un groupe ou briefing sur mesure ? <a href="#contact">Nous contacter →</a>',
       licence: "Licence organisation · usage interne par tous les employés de l'organisation acheteuse",
       pages: 'pages', pdf: 'PDF', inEnglish: 'Rapport en anglais', previewIncludes: 'Aperçu gratuit : sommaire exécutif et section 1',
@@ -2077,7 +2109,13 @@
       'rp-success-text': "Le téléchargement de votre aperçu a commencé. S'il ne démarre pas, utilisez le bouton ci-dessous.",
       'rp-download-again': 'Télécharger à Nouveau', 'rp-buy': 'Acheter le Rapport Complet',
       errRequired: 'Veuillez renseigner votre prénom, votre nom et votre adresse courriel.',
-      errEmail: 'Veuillez entrer une adresse courriel valide.'
+      errEmail: 'Veuillez entrer une adresse courriel valide.',
+      download: 'Télécharger le Livre Blanc', freeFine: 'Livre blanc gratuit · téléchargement complet',
+      'wp-eyebrow': 'Livre Blanc Gratuit',
+      'wp-lede': 'Indiquez-nous vos coordonnées et le téléchargement de votre livre blanc démarrera immédiatement.',
+      'wp-submit': 'Télécharger →',
+      'wp-privacy': "Vos coordonnées servent uniquement à vous transmettre ce livre blanc et, si vous y consentez, les nouvelles de B² Advisory. Elles ne sont jamais partagées.",
+      'wp-success-text': "Le téléchargement de votre livre blanc a commencé. S'il ne démarre pas, utilisez le bouton ci-dessous."
     }
   };
 
@@ -2154,7 +2192,11 @@
           ? `<details class="report-details"><summary><span class="rd-open">${t('whatsInside')}</span><span class="rd-close">${t('hideDetails')}</span><span class="rd-chev" aria-hidden="true"></span></summary>
                <ul class="report-highlights">${r.highlights[lang].map(h => `<li>${esc(h)}</li>`).join('')}</ul></details>` : '';
         const price = (r.price != null) ? `<div class="report-price" title="${esc(t('licence'))}">${formatPrice(r)}</div>` : '';
-        const fine = [r.price != null ? t('licenceShort') : '', t('previewIncludes')].filter(Boolean).join(' · ');
+        const fine = r.free ? t('freeFine') : [r.price != null ? t('licenceShort') : '', t('previewIncludes')].filter(Boolean).join(' · ');
+        const actions = r.free
+          ? `<a class="report-btn report-btn--buy" href="#" data-preview="${esc(r.id)}">${t('download')}</a>`
+          : `<a class="report-btn report-btn--preview" href="#" data-preview="${esc(r.id)}">${t('preview')}</a>
+                <a class="report-btn report-btn--buy" href="${ready ? esc(r.checkoutUrl) : '#'}" data-buy="${esc(r.id)}">${t('buy')}</a>`;
         return `
         <article class="report-card">
           <div class="report-body">
@@ -2171,8 +2213,7 @@
             <div class="report-buybar">
               ${price}
               <div class="report-actions">
-                <a class="report-btn report-btn--preview" href="#" data-preview="${esc(r.id)}">${t('preview')}</a>
-                <a class="report-btn report-btn--buy" href="${ready ? esc(r.checkoutUrl) : '#'}" data-buy="${esc(r.id)}">${t('buy')}</a>
+                ${actions}
               </div>
             </div>
             <div class="report-note" data-note="${esc(r.id)}"></div>
@@ -2186,9 +2227,12 @@
     function applyModalLang() {
       ['rp-eyebrow','rp-lede','rp-label-fn','rp-label-ln','rp-label-email','rp-label-org',
        'rp-consent-text','rp-privacy','rp-success-text','rp-download-again','rp-buy'].forEach(id => {
-        const el = $(id); if (el) el.textContent = t(id);
+        const el = $(id); if (!el) return;
+        const wp = id.replace('rp-', 'wp-');
+        el.textContent = (activeReport && activeReport.free && REPORTS_I18N[curLang()][wp]) ? t(wp) : t(id);
       });
-      const btn = $('rp-submit'); if (btn && !btn.disabled) btn.textContent = t('rp-submit');
+      const btn = $('rp-submit');
+      if (btn && !btn.disabled) btn.textContent = (activeReport && activeReport.free) ? t('wp-submit') : t('rp-submit');
       if (activeReport) $('rp-title').textContent = activeReport.title[curLang()];
     }
 
@@ -2253,7 +2297,7 @@
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
             access_key: 'c62f2f46-70fb-42b1-91e2-95aa934be7c6',
-            subject: `Report preview download — ${r.title.en} — ${lead.fn} ${lead.ln}${lead.org ? ' · ' + lead.org : ''}`,
+            subject: `${r.free ? 'Whitepaper download' : 'Report preview download'} — ${r.title.en} — ${lead.fn} ${lead.ln}${lead.org ? ' · ' + lead.org : ''}`,
             from_name: `${lead.fn} ${lead.ln}`,
             reply_to: lead.email,
             message: message,
@@ -2268,7 +2312,7 @@
       saveLead(lead);
       startDownload(r.previewUrl);
 
-      btn.disabled = false; btn.textContent = t('rp-submit');
+      btn.disabled = false; btn.textContent = r.free ? t('wp-submit') : t('rp-submit');
       $('rp-form-wrap').style.display = 'none';
       $('rp-success').style.display = 'block';
       $('rp-download-again').href = r.previewUrl;
@@ -2309,6 +2353,18 @@
     };
 
     renderReports();
+
+    /* Deep link for social posts: bsquared-advisory.com/#whitepaper-5g6g opens the whitepaper download form */
+    const DEEP_LINKS = { '#whitepaper-5g6g': 'lost-promise-5g-2026' };
+    function openFromHash() {
+      const id = DEEP_LINKS[window.location.hash];
+      if (!id) return;
+      const sec = $('reports'); if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      const r = REPORTS.find(x => x.id === id);
+      if (r) setTimeout(() => openModal(r), 400);
+    }
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
 
     if (TEST_CHECKOUT) {
       const b = document.createElement('div');
