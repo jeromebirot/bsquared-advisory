@@ -901,6 +901,44 @@
   @media (max-width: 1100px) {
     .reports-grid { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
   }
+
+  /* Report tiles in one horizontal row: snaps tile by tile, next tile peeks in from the right */
+  .reports-intro { margin-bottom: 28px; }
+  .reports-rowbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    max-width: 1180px; margin-bottom: 16px;
+  }
+  .reports-count { font-size: 13px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--text-muted); }
+  .reports-nav { display: flex; gap: 10px; }
+  .reports-arrow {
+    width: 46px; height: 46px; border-radius: 2px; cursor: pointer;
+    border: 1px solid rgba(13,61,58,0.3); background: white; color: var(--teal-deep);
+    font-size: 28px; line-height: 1; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+  }
+  .reports-arrow:hover:not(:disabled), .reports-arrow:focus-visible { background: var(--teal-accent); border-color: var(--teal-accent); outline: none; }
+  .reports-arrow:disabled { opacity: 0.35; cursor: default; }
+  .reports-rowbar.is-static .reports-nav { display: none; }
+  .reports-grid, .reports-grid.reports-grid--single {
+    display: flex; gap: 24px; max-width: 1180px; align-items: flex-start;
+    overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+    padding: 6px 2px 18px; scrollbar-width: thin; scrollbar-color: rgba(13,61,58,0.25) transparent;
+  }
+  .reports-grid:focus-visible { outline: 2px solid var(--teal-accent); outline-offset: 4px; }
+  .reports-grid::-webkit-scrollbar { height: 6px; }
+  .reports-grid::-webkit-scrollbar-thumb { background: rgba(13,61,58,0.25); border-radius: 3px; }
+  .reports-grid > .report-card { flex: 0 0 calc((100% - 48px) / 2.15); scroll-snap-align: start; min-width: 0; }
+  @media (max-width: 1100px) {
+    .reports-grid { max-width: none; }
+    .reports-rowbar { max-width: none; }
+    .reports-grid > .report-card { flex-basis: 72%; }
+  }
+  @media (max-width: 768px) {
+    .reports-grid { gap: 14px; }
+    .reports-grid > .report-card { flex-basis: 86%; }
+    .reports-rowbar .reports-nav { display: none; }
+  }
   @media (max-width: 768px) {
     .reports-intro { margin-bottom: 40px; }
     .rp-dialog { padding: 36px 22px 28px; }
@@ -1795,8 +1833,16 @@
     Download our free whitepapers, a free preview of any report, or purchase the full edition, delivered by email.
   </p>
 
-  <!-- Cards are rendered from the REPORTS list in the script at the bottom of this page. -->
-  <div class="reports-grid" id="reports-grid"></div>
+  <!-- Cards are rendered from the REPORTS list in the script at the bottom of this page.
+       They sit in one horizontal row that scrolls sideways (swipe, trackpad, arrows or keyboard). -->
+  <div class="reports-rowbar" id="reports-rowbar">
+    <div class="reports-count" id="reports-count" aria-live="polite"></div>
+    <div class="reports-nav">
+      <button type="button" class="reports-arrow" id="reports-prev" aria-label="Previous reports"><span aria-hidden="true">‹</span></button>
+      <button type="button" class="reports-arrow" id="reports-next" aria-label="Next reports"><span aria-hidden="true">›</span></button>
+    </div>
+  </div>
+  <div class="reports-grid" id="reports-grid" tabindex="0" role="region" aria-label="Industry reports"></div>
 
   <p class="reports-footnote" id="reports-footnote">
     Group-wide licence or a tailored briefing? <a href="#contact">Get in touch →</a>
@@ -2082,6 +2128,7 @@
       errRequired: 'Please provide your first name, last name and email address.',
       errEmail: 'Please enter a valid email address.',
       download: 'Download Free Whitepaper', freeFine: 'Free whitepaper · full download',
+      count: '{a}–{b} of {n}', countOne: '{n} of {n}', prev: 'Previous reports', next: 'Next reports',
       'wp-eyebrow': 'Free Whitepaper',
       'wp-lede': 'Tell us where to send it and your whitepaper will download right away.',
       'wp-submit': 'Download Now →',
@@ -2111,6 +2158,7 @@
       errRequired: 'Veuillez renseigner votre prénom, votre nom et votre adresse courriel.',
       errEmail: 'Veuillez entrer une adresse courriel valide.',
       download: 'Télécharger le Livre Blanc', freeFine: 'Livre blanc gratuit · téléchargement complet',
+      count: '{a}–{b} sur {n}', countOne: '{n} sur {n}', prev: 'Rapports précédents', next: 'Rapports suivants',
       'wp-eyebrow': 'Livre Blanc Gratuit',
       'wp-lede': 'Indiquez-nous vos coordonnées et le téléchargement de votre livre blanc démarrera immédiatement.',
       'wp-submit': 'Télécharger →',
@@ -2198,7 +2246,7 @@
           : `<a class="report-btn report-btn--preview" href="#" data-preview="${esc(r.id)}">${t('preview')}</a>
                 <a class="report-btn report-btn--buy" href="${ready ? esc(r.checkoutUrl) : '#'}" data-buy="${esc(r.id)}">${t('buy')}</a>`;
         return `
-        <article class="report-card">
+        <article class="report-card" data-card="${esc(r.id)}">
           <div class="report-body">
             <div class="report-head${thumb ? '' : ' report-head--nothumb'}">
               ${thumb}
@@ -2222,6 +2270,45 @@
         </article>`;
       }).join('');
     }
+
+    /* ── Horizontal row: arrows, counter, deep-link positioning ── */
+    function rowStep() {
+      const grid = $('reports-grid'); const card = grid && grid.querySelector('.report-card');
+      if (!card) return 0;
+      return card.getBoundingClientRect().width + parseFloat(getComputedStyle(grid).columnGap || getComputedStyle(grid).gap || 24);
+    }
+    function updateRow() {
+      const grid = $('reports-grid'); if (!grid) return;
+      const cards = [...grid.querySelectorAll('.report-card')];
+      const n = cards.length; if (!n) return;
+      const gl = grid.getBoundingClientRect();
+      const visible = cards.map((c, i) => {
+        const r = c.getBoundingClientRect();
+        const shown = Math.min(r.right, gl.right) - Math.max(r.left, gl.left);
+        return shown >= r.width * 0.6 ? i : -1;
+      }).filter(i => i >= 0);
+      const a = (visible[0] ?? 0) + 1, b = (visible[visible.length - 1] ?? 0) + 1;
+      const tpl = (a === b) ? t('countOne').replace('{n}', a) : t('count').replace('{a}', a).replace('{b}', b);
+      $('reports-count').textContent = tpl.replace(/\{n\}/g, n);
+      const max = grid.scrollWidth - grid.clientWidth;
+      $('reports-rowbar').classList.toggle('is-static', max <= 2);
+      $('reports-prev').disabled = grid.scrollLeft <= 2;
+      $('reports-next').disabled = grid.scrollLeft >= max - 2;
+      $('reports-prev').setAttribute('aria-label', t('prev'));
+      $('reports-next').setAttribute('aria-label', t('next'));
+    }
+    function scrollRowTo(id) {
+      const grid = $('reports-grid'); const card = grid && grid.querySelector(`[data-card="${id}"]`);
+      if (card) grid.scrollTo({ left: card.offsetLeft - grid.firstElementChild.offsetLeft, behavior: 'smooth' });
+    }
+    let rowTick = false;
+    $('reports-grid').addEventListener('scroll', () => {
+      if (rowTick) return; rowTick = true;
+      requestAnimationFrame(() => { rowTick = false; updateRow(); });
+    }, { passive: true });
+    window.addEventListener('resize', updateRow);
+    $('reports-prev').addEventListener('click', () => $('reports-grid').scrollBy({ left: -rowStep(), behavior: 'smooth' }));
+    $('reports-next').addEventListener('click', () => $('reports-grid').scrollBy({ left: rowStep(), behavior: 'smooth' }));
 
     /* ── Modal ── */
     function applyModalLang() {
@@ -2349,10 +2436,13 @@
         if (text[id]) el.textContent = map[id]; else el.innerHTML = map[id];
       });
       renderReports();
+      updateRow();
       applyModalLang();
     };
 
     renderReports();
+    updateRow();
+    window.addEventListener('load', updateRow);
 
     /* Deep link for social posts: bsquared-advisory.com/#whitepaper-5g6g opens the whitepaper download form */
     const DEEP_LINKS = { '#whitepaper-5g6g': 'lost-promise-5g-2026' };
@@ -2361,7 +2451,7 @@
       if (!id) return;
       const sec = $('reports'); if (sec) sec.scrollIntoView({ behavior: 'smooth' });
       const r = REPORTS.find(x => x.id === id);
-      if (r) setTimeout(() => openModal(r), 400);
+      if (r) { scrollRowTo(id); setTimeout(() => openModal(r), 400); }
     }
     openFromHash();
     window.addEventListener('hashchange', openFromHash);

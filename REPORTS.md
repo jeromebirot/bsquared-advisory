@@ -22,3 +22,12 @@ A whitepaper is an entry in `REPORTS` with `free: true`, `price: null` and `chec
 - **Free Preview** opens a form (name, email, optional organisation, optional marketing opt-in). Each submission is emailed to you via Web3Forms, then the preview downloads. The visitor's details are remembered in their browser for next time.
 - **Buy Full Report** opens the Stripe Payment Link in a new tab, tagged with the report ID (`client_reference_id`) and pre-filled with the visitor's email if they already requested a preview. After payment, the full PDF is emailed to the buyer manually (stamped with their organisation name).
 - Any `checkoutUrl` still containing `REPLACE` shows a "checkout being set up, please get in touch" note instead of opening checkout.
+
+## Reports row layout
+
+The reports section is a single horizontal row (CSS scroll-snap), so the page never grows taller as reports are added.
+
+- Desktop shows about two tiles with a peek of the next; tablet and phone show one tile with a peek. Visitors swipe or use the ‹ › arrows (arrows hidden on phones).
+- The "1–2 of N" counter and the arrows update automatically from the `REPORTS` array; nothing to change when adding a report.
+- Order in `REPORTS` = order in the row, so put the newest or most important item first.
+- Deep links (e.g. `#whitepaper-5g6g`) slide the row to that tile before opening its modal.
